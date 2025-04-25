@@ -5,6 +5,7 @@
 /backend/.vs/backend
 /backend/backend/bin/Debug/net8.0
 /backend/backend/obj
+/backend/backend/Properties
 /backend/backend/appsettings.Development.json
 /backend/backend/appsettings.json
 /backend/backend/backend.csproj
@@ -12,3 +13,4 @@
 /backend/backend/backend.http
 /backend/backend/Properties
 /backend/backend/Properties/launchSettings.json
+/backend/backend.sln
