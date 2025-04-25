@@ -1,0 +1,14 @@
+﻿################################################################################
+# Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
+################################################################################
+
+/backend/.vs/backend
+/backend/backend/bin/Debug/net8.0
+/backend/backend/obj
+/backend/backend/Properties
+/backend/backend/appsettings.Development.json
+/backend/backend/appsettings.json
+/backend/backend/backend.csproj
+/backend/backend/backend.csproj.user
+/backend/backend/backend.http
+/backend/backend.sln
