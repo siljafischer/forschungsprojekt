@@ -1,11 +1,9 @@
 ﻿// Connection to database (simulation)
 // use own models
-using backend.Models;
 using System.Globalization;
-
-
 // get data via linq
 using System.Linq;
+using backend.Models;
 
 
 namespace backend.Repositories
