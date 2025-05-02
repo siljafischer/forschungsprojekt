@@ -14,3 +14,11 @@
 /backend/backend/Properties
 /backend/backend/Properties/launchSettings.json
 /backend/backend.sln
+/unity/Library
+/unity/Logs
+/unity/.vs
+/unity/obj
+/unity/Packages/packages-lock.json
+/unity/Temp
+/unity/UserSettings
+/backend/.vs/ProjectEvaluation
