@@ -1,12 +1,12 @@
 // Communication: Definition of API-Endpoints
-using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Globalization;
+using backend.Controllers;
 // use classes, mapper, DoorController
 using backend.Models;
 using backend.Repositories;
-using backend.Controllers;
-using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Globalization;
 
 namespace backend.Controllers
 {
