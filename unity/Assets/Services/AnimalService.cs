@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Assets.Models;
 using UnityEngine;
 
@@ -24,11 +25,12 @@ namespace Assets.Services
         }
 
         // Wrapper-Klasse, um das JSON-Array als Objekt zu behandeln
-        [System.Serializable]
+        [Serializable]
         public class AnimalListWrapper
         {
             public List<Animal> animals;
         }
+
 
         // get all Animals
         public async Task<List<Animal>> GetAnimalsAsync()
@@ -43,11 +45,9 @@ namespace Assets.Services
                 {
                     // Hole die JSON-Antwort als String
                     var json = await response.Content.ReadAsStringAsync();
-
-                    // Hier verpacken wir das JSON-Array in ein JSON-Objekt für JsonUtility
-                    // HIER LIEGT DAS PROBLEM!!!
-                    var wrapper = JsonUtility.FromJson<AnimalListWrapper>("{\"animals\":" + json + "}");
-                    Debug.Log(wrapper.animals);
+                    string wrappedJson = "{\"animals\":" + json + "}";
+                    AnimalListWrapper wrapper = JsonUtility.FromJson<AnimalListWrapper>(wrappedJson);
+                    Debug.Log("Anzahl Tiere: " + (wrapper.animals != null ? wrapper.animals.Count : 0));
 
                     // Rückgabe der Liste von Tieren
                     return wrapper.animals;

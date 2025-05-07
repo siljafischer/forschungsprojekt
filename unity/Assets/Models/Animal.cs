@@ -1,13 +1,16 @@
 ﻿// classes
 
+using System;
+
 namespace Assets.Models
 {
     // user class
+    [Serializable]
     public class Animal : BusinessObject
     {
         // attributes
-        public string name { get; set; }
-        public string animationlink { get; set; }
-        public string habitat { get; set; }
+        public string name;
+        public string animationlink;
+        public string habitat;
     }
 }
