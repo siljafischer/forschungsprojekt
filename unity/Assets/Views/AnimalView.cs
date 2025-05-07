@@ -2,6 +2,7 @@ using UnityEngine;
 using Assets.ViewModels;
 using System.Collections;
 using System.Threading.Tasks;
+using GLTFast;
 
 public class AnimalView : MonoBehaviour
 {
@@ -10,20 +11,46 @@ public class AnimalView : MonoBehaviour
     private void Start()
     {
         _viewModel = new AnimalViewModel();
-        StartCoroutine(LoadAndDisplayAnimals()); // Starte Coroutine für asynchrone Methode
+        StartCoroutine(LoadAndDisplayAnimals());
     }
 
-    // Coroutine, um asynchrone Methode korrekt auszuführen
     private IEnumerator LoadAndDisplayAnimals()
     {
-        // Warten auf den Abschluss des asynchronen Tasks
-        Task task = _viewModel.LoadAllAnimalsAsync();
-        yield return new WaitUntil(() => task.IsCompleted); // Warten, bis der Task abgeschlossen ist
+        // Tiere asynchron laden
+        Task loadTask = _viewModel.LoadAllAnimalsAsync();
+        yield return new WaitUntil(() => loadTask.IsCompleted);
 
-        // Alle Tiere in der Konsole ausgeben
-        foreach (var animal in _viewModel.Animals)
+        if (_viewModel.Animals == null || _viewModel.Animals.Count == 0)
         {
-            Debug.Log($"Tier: {animal.name}");
+            Debug.LogWarning("Keine Tiere gefunden.");
+            yield break;
+        }
+
+        // Erstes Tier holen
+        var animal = _viewModel.Animals[0];
+        string path = animal.animationlink;
+
+        Debug.Log($"Lade GLB-Modell von Pfad: {path}");
+
+        // GLB-Datei laden
+        var gltf = new GltfImport();
+        Task<bool> loadModel = gltf.Load(path);
+        yield return new WaitUntil(() => loadModel.IsCompleted);
+
+        if (loadModel.Result)
+        {
+            GameObject go = new GameObject(animal.name);
+            gltf.InstantiateMainScene(go.transform);
+
+            // Optional: Positionieren
+            go.transform.position = new Vector3(0, 0, 0);
+            go.transform.localScale = Vector3.one;
+
+            Debug.Log("Modell erfolgreich geladen und instanziiert.");
+        }
+        else
+        {
+            Debug.LogError("Fehler beim Laden des GLB-Modells.");
         }
     }
 }
