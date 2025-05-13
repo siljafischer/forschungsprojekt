@@ -16,7 +16,6 @@ public class AnimalView : MonoBehaviour
 
     private IEnumerator LoadAndDisplayAnimals()
     {
-        // Tiere asynchron laden
         Task loadTask = _viewModel.LoadAllAnimalsAsync();
         yield return new WaitUntil(() => loadTask.IsCompleted);
 
@@ -26,31 +25,25 @@ public class AnimalView : MonoBehaviour
             yield break;
         }
 
-        // Erstes Tier holen
-        var animal = _viewModel.Animals[0];
-        string path = animal.animationlink;
+        var animal = _viewModel.Animals[2]; // Beispiel
 
-        Debug.Log($"Lade GLB-Modell von Pfad: {path}");
+        Debug.Log($"Lade Tier: {animal.name}, Pfad: {animal.animationlink}");
 
-        // GLB-Datei laden
-        var gltf = new GltfImport();
-        Task<bool> loadModel = gltf.Load(path);
-        yield return new WaitUntil(() => loadModel.IsCompleted);
-
-        if (loadModel.Result)
+        // Dynamisches Prefab-Laden
+        GameObject prefab = Resources.Load<GameObject>(animal.animationlink);
+        if (prefab == null)
         {
-            GameObject go = new GameObject(animal.name);
-            gltf.InstantiateMainScene(go.transform);
-
-            // Optional: Positionieren
-            go.transform.position = new Vector3(0, 0, 0);
-            go.transform.localScale = Vector3.one;
-
-            Debug.Log("Modell erfolgreich geladen und instanziiert.");
+            Debug.LogError($"Konnte Prefab nicht finden unter: Resources/{animal.animationlink}.prefab");
+            yield break;
         }
-        else
-        {
-            Debug.LogError("Fehler beim Laden des GLB-Modells.");
-        }
+
+        GameObject instance = Instantiate(prefab);
+
+        // Positionieren in Sichtweite
+        Camera cam = Camera.main;
+        instance.transform.position = cam.transform.position + cam.transform.forward * 3f;
+
+        Debug.Log("Tier erfolgreich geladen und angezeigt.");
     }
+
 }
