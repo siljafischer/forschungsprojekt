@@ -65,8 +65,10 @@
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Views\AnimalView.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\MovePlayerInput.cs" />
+    <Compile Include="Assets\Helpers\MonoBehaviourBridge.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Services\AnimalService.cs" />
+    <Compile Include="Assets\Helpers\MovementLibrary.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\PlayerCamera.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\CreatureMover.cs" />
     <Compile Include="Assets\Models\Animal.cs" />

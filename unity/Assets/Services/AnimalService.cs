@@ -21,7 +21,6 @@ namespace Assets.Services
             {
                 BaseAddress = new Uri("https://localhost:7254")
             };
-            Debug.Log($"HttpClient erstellt: {_httpClient.BaseAddress}");
         }
 
         // Wrapper-Klasse, um das JSON-Array als Objekt zu behandeln

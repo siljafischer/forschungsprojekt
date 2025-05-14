@@ -1,12 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.ViewModels;
 using System.Collections;
 using System.Threading.Tasks;
-using GLTFast;
 
 public class AnimalView : MonoBehaviour
 {
     private AnimalViewModel _viewModel;
+    private GameObject _animalInstance;
 
     private void Start()
     {
@@ -27,9 +27,7 @@ public class AnimalView : MonoBehaviour
 
         var animal = _viewModel.Animals[2]; // Beispiel
 
-        Debug.Log($"Lade Tier: {animal.name}, Pfad: {animal.animationlink}");
 
-        // Dynamisches Prefab-Laden
         GameObject prefab = Resources.Load<GameObject>(animal.animationlink);
         if (prefab == null)
         {
@@ -37,13 +35,16 @@ public class AnimalView : MonoBehaviour
             yield break;
         }
 
-        GameObject instance = Instantiate(prefab);
+        _animalInstance = Instantiate(prefab);
 
-        // Positionieren in Sichtweite
         Camera cam = Camera.main;
-        instance.transform.position = cam.transform.position + cam.transform.forward * 3f;
+        _animalInstance.transform.position = cam.transform.position + cam.transform.forward * 3f + cam.transform.up * -1f; // etwas nach unten
 
-        Debug.Log("Tier erfolgreich geladen und angezeigt.");
+        _animalInstance.AddComponent<MonoBehaviourBridge>();
+
+        // ViewModel beauftragt die Bewegung (via Component oder direkt)
+        yield return new WaitForSeconds(3f);
+        //_viewModel.MoveAnimalRequested(_animalInstance);             // → transform
+        _viewModel.MoveAnimalWithMoverRequested(_animalInstance);    // → CreatureMover
     }
-
 }
