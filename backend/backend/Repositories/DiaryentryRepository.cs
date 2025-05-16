@@ -63,6 +63,9 @@ namespace backend.Repositories
             File.WriteAllLines(_csvFilePath, lines);
         }
 
+        // get all : LINQ
+        public IEnumerable<Diaryentry> GetAll() => _items;
+
 
         // get first with id (only one per id)
         public Diaryentry GetById(string id) => _items.FirstOrDefault(item => item.id == id);

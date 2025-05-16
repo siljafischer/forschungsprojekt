@@ -11,7 +11,7 @@ namespace backend.Repositories
     public class RoadRepository
     {
         // _ = List
-        private readonly List<Animal> _items = new();
+        private readonly List<Road> _items = new();
         private readonly string _csvFilePath = "db_sim_road.csv";
         private bool _initialized = false;
 
@@ -37,14 +37,12 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    System.Diagnostics.Debug.WriteLine($"Daten: {values[0]} {values[1]} {values[2]} {values[3]}");
+                    System.Diagnostics.Debug.WriteLine($"Daten: {values[0]} {values[1]}");
 
-                    _items.Add(new Animal
+                    _items.Add(new Road
                     {
                         id = values[0],
-                        name = values[1],
-                        animationlink = values[2],
-                        habitat = values[3]
+                        title = values[1]
                     });
 
                 }
@@ -58,24 +56,24 @@ namespace backend.Repositories
         private void SaveDataToCsv()
         {
             // header
-            var lines = new List<string> { "id;name;animationlink;habitat" };
+            var lines = new List<string> { "id;title" };
             // values
-            lines.AddRange(_items.Select(item => $"{item.id};{item.name};{item.animationlink};{item.habitat}"));
+            lines.AddRange(_items.Select(item => $"{item.id};{item.title}"));
             // save
             File.WriteAllLines(_csvFilePath, lines);
         }
 
 
         // get all : LINQ
-        public IEnumerable<Animal> GetAll() => _items;
+        public IEnumerable<Road> GetAll() => _items;
 
 
         // get first with id (only one per id)
-        public Animal GetById(string id) => _items.FirstOrDefault(item => item.id == id);
+        public Road GetById(string id) => _items.FirstOrDefault(item => item.id == id);
 
 
         // Create
-        public void Create(Animal item)
+        public void Create(Road item)
         {
             _items.Add(item);
             // save current status
@@ -84,15 +82,13 @@ namespace backend.Repositories
 
 
         // Update by id
-        public void Update(Animal item)
+        public void Update(Road item)
         {
             var existingItem = _items.FirstOrDefault(i => i.id == item.id);
             if (existingItem != null)
             {
                 existingItem.id = item.id;
-                existingItem.name = item.name;
-                existingItem.animationlink = item.animationlink;
-                existingItem.habitat = item.habitat;
+                existingItem.title = item.title;
                 // save current status
                 SaveDataToCsv();
             }
