@@ -16,6 +16,7 @@ namespace backend.Controllers
     {
         /// Use connector to database!
         private readonly DiaryRepository _repository = new();
+        private readonly DiaryDiaryentryRepository _repository2 = new();
 
 
         // GetById
@@ -35,6 +36,18 @@ namespace backend.Controllers
         public IActionResult GetByUser(string user)
         {
             var item = _repository.GetByUser(user);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
+        // GetRelatedEntries
+        [HttpGet("allRelatedEntries/{id}")]
+        public IActionResult GetRelatedEntries(string id)
+        {
+            var item = _repository2.GetByDiary(id);
             if (item == null)
             {
                 return NotFound();
@@ -87,6 +100,9 @@ namespace backend.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
+            // delete related entries
+            _repository2.DeleteByDiary(id);
+
             _repository.Delete(id);
             return NoContent();
         }

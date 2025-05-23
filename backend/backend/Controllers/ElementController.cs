@@ -16,6 +16,7 @@ namespace backend.Controllers
     {
         /// Use connector to database!
         private readonly ElementRepository _repository = new();
+        private readonly ElementRoadRepository _repository2 = new();
 
         // Get all
         [HttpGet]
@@ -62,6 +63,14 @@ namespace backend.Controllers
             }
         }
 
+        // Create link to road
+        [HttpPost("createLinkToRoad")]
+        public IActionResult CreateLinkToRoad([FromBody] backend.Models.ElementRoad newItem)
+        {
+            _repository2.Create(newItem);
+            return NoContent();
+        }
+
 
         // Update
         [HttpPut("update/{id}")]
@@ -83,6 +92,9 @@ namespace backend.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
+            // delete all links to road
+            _repository2.DeleteByElement(id);
+
             _repository.Delete(id);
             return NoContent();
         }

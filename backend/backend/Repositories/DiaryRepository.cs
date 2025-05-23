@@ -24,7 +24,6 @@ namespace backend.Repositories
             }
         }
 
-
         // read and save to csv --> current storage
         private void LoadDataFromCsv()
         {
@@ -52,7 +51,6 @@ namespace backend.Repositories
                 System.Diagnostics.Debug.WriteLine($"Datei nicht gefunden: {_csvFilePath}");
             }
         }
-
         private void SaveDataToCsv()
         {
             // header

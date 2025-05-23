@@ -16,6 +16,7 @@ namespace backend.Controllers
     {
         /// Use connector to calnedar-database!
         private readonly AnimalRepository _repository = new();
+        private readonly AnimalRoadRepository _repository2 = new();
 
         // Get all
         [HttpGet]
@@ -62,6 +63,15 @@ namespace backend.Controllers
             }
         }
 
+        // Create Link To Road
+        [HttpPost("createLinkToRoad")]
+        public IActionResult CreateLinkToRoad([FromBody] backend.Models.AnimalRoad newItem) { 
+
+            _repository2.Create(newItem);
+            return NoContent();
+
+        }
+
 
         // Update
         [HttpPut("update/{id}")]
@@ -85,6 +95,9 @@ namespace backend.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
+            // delete all links to roads
+            _repository2.DeleteByAnimal(id);
+
             _repository.Delete(id);
             return NoContent();
         }

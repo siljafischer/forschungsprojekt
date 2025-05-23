@@ -16,6 +16,7 @@ namespace backend.Controllers
     {
         /// Use connector to database!
         private readonly DiaryentryRepository _repository = new();
+        private readonly DiaryDiaryentryRepository _repository2 = new();
 
         // Get all
         [HttpGet]
@@ -62,6 +63,15 @@ namespace backend.Controllers
             }
         }
 
+        // Create link to diary
+        [HttpPost("createLinkToDiary")]
+        public IActionResult CreateLinkToDiary([FromBody] backend.Models.DiaryDiaryentry newItem)
+        {
+
+            _repository2.Create(newItem);
+            return NoContent();
+        }
+
 
         // Update
         [HttpPut("update/{id}")]
@@ -83,6 +93,9 @@ namespace backend.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
+            // delete all links to diary
+            _repository2.DeleteByDiaryentry(id);
+
             _repository.Delete(id);
             return NoContent();
         }

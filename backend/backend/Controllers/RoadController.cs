@@ -16,6 +16,8 @@ namespace backend.Controllers
     {
         /// Use connector to database!
         private readonly RoadRepository _repository = new();
+        private readonly AnimalRoadRepository _repository2 = new();
+        private readonly ElementRoadRepository _repository3= new();
 
         // Get all
         [HttpGet]
@@ -31,6 +33,30 @@ namespace backend.Controllers
         public IActionResult GetById(string id)
         {
             var item = _repository.GetById(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
+        // Get related animals
+        [HttpGet("allRelatedAnimals/{id}")]
+        public IActionResult GetRelatedAnimals(string id)
+        {
+            var item = _repository2.GetByRoad(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
+        // GetById
+        [HttpGet("allRelatedElements/{id}")]
+        public IActionResult GetRelatedElements(string id)
+        {
+            var item = _repository3.GetByRoad(id);
             if (item == null)
             {
                 return NotFound();
@@ -83,6 +109,12 @@ namespace backend.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
+            // delete links to animals
+            _repository2.DeleteByRoad(id);
+
+            // delete links to element
+            _repository3.DeleteByRoad(id);
+
             _repository.Delete(id);
             return NoContent();
         }
