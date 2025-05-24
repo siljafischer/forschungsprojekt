@@ -37,8 +37,6 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    System.Diagnostics.Debug.WriteLine($"Daten: {values[0]} {values[1]}");
-
                     _items.Add(new Element
                     {
                         id = values[0],

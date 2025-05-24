@@ -36,8 +36,6 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    System.Diagnostics.Debug.WriteLine($"Daten: {values[0]} {values[1]} {values[2]} {values[3]}");
-
                     _items.Add(new DiaryDiaryentry
                     {
                         id_diary = values[0],
@@ -65,7 +63,7 @@ namespace backend.Repositories
 
 
         // get by diary
-        public DiaryDiaryentry GetByDiary(string did) => _items.FirstOrDefault(item => item.id_diary == did);
+        public List<DiaryDiaryentry> GetByDiary(string did) => _items.Where(item => item.id_diary == did).ToList();
 
 
 

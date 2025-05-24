@@ -56,10 +56,10 @@ namespace backend.Controllers
                 // Create related diaryentry
                 var newDiary = new backend.Models.Diaryentry
                 {
-                    id = "0",
+                    id = null,
                     id_animal = $"{newItem.id}"
                 };
-                _repository3.Create(newDiary);
+                _repository3.CreateFromAnimal(newDiary);
 
                 _repository.Create(newItem);
                 return NoContent();

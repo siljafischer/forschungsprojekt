@@ -63,11 +63,11 @@ namespace backend.Controllers
             }
         }
 
+
         // Create link to diary
         [HttpPost("createLinkToDiary")]
         public IActionResult CreateLinkToDiary([FromBody] backend.Models.DiaryDiaryentry newItem)
         {
-
             _repository2.Create(newItem);
             return NoContent();
         }

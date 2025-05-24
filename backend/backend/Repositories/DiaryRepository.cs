@@ -36,8 +36,6 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    System.Diagnostics.Debug.WriteLine($"Daten: {values[0]} {values[1]}");
-
                     _items.Add(new Diary
                     {
                         id = values[0],
@@ -74,6 +72,19 @@ namespace backend.Repositories
         // Create
         public void Create(Diary item)
         {
+            _items.Add(item);
+            // save current status
+            SaveDataToCsv();
+        }
+
+        // Create
+        public void CreateByUser(Diary item)
+        {
+            // id = + 1 --> prevent conflicts
+            var allEntries = GetAll();
+            int maxId = allEntries.Any() ? allEntries.Max(c => int.Parse(c.id)) : 0;
+            item.id = (maxId + 1).ToString();
+
             _items.Add(item);
             // save current status
             SaveDataToCsv();

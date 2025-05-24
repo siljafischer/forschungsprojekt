@@ -36,8 +36,6 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    System.Diagnostics.Debug.WriteLine($"Daten: {values[0]} {values[1]} {values[2]} {values[3]} {values[4]} {values[5]}");
-
                     _items.Add(new AnimalRoad
                     {
                         id_road = values[0],
@@ -67,7 +65,7 @@ namespace backend.Repositories
 
 
         // get by Road
-        public AnimalRoad GetByRoad(string rid) => _items.FirstOrDefault(item => item.id_road == rid);
+        public List<AnimalRoad> GetByRoad(string rid) => _items.Where(item => item.id_road == rid).ToList();
 
 
         // Create
