@@ -106,6 +106,17 @@ namespace backend.Controllers
             _repository.Delete(id);
             return NoContent();
         }
+
+        // Delete
+        [HttpDelete("deleteByUser/{id}")]
+        public IActionResult DeleteByUser(string id)
+        {
+            // delete related entries
+            _repository2.DeleteByDiary(id);
+
+            _repository.DeleteByUser(id);
+            return NoContent();
+        }
     }
 }
 

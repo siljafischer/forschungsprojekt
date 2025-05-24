@@ -16,6 +16,7 @@ namespace backend.Controllers
     {
         /// Use connector to database!
         private readonly UserRepository _repository = new();
+        private readonly DiaryRepository _repository2 = new();
 
         // Get all
         [HttpGet]
@@ -64,6 +65,14 @@ namespace backend.Controllers
             var existItem2 = _repository.GetByUsername(newItem.username);
             if (existItem == null && existItem2 == null)
             {
+                // Create related diary
+                var newDiary = new backend.Models.Diary
+                {
+                    id = "0",
+                    user = $"{newItem.id}"
+                };
+                _repository2.Create(newDiary);
+
                 _repository.Create(newItem);
                 return NoContent();
             }
@@ -99,6 +108,9 @@ namespace backend.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
+            // Delete diary
+            _repository2.DeleteByUser(id);
+
             _repository.Delete(id);
             return NoContent();
         }

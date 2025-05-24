@@ -102,5 +102,14 @@ namespace backend.Repositories
             SaveDataToCsv();
 
         }
+
+        // Delete by user
+        public void DeleteByUser(string id)
+        {
+            _items.RemoveAll(item => item.user == id);
+            // save current status
+            SaveDataToCsv();
+
+        }
     }
 }

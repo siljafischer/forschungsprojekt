@@ -99,6 +99,17 @@ namespace backend.Controllers
             _repository.Delete(id);
             return NoContent();
         }
+
+        // Delete by animal
+        [HttpDelete("deleteByAnimal/{id}")]
+        public IActionResult DeleteByAnimal(string id)
+        {
+            // delete all links to diary
+            _repository2.DeleteByDiaryentry(id);
+
+            _repository.DeleteByAnimal(id);
+            return NoContent();
+        }
     }
 }
 

@@ -17,6 +17,7 @@ namespace backend.Controllers
         /// Use connector to calnedar-database!
         private readonly AnimalRepository _repository = new();
         private readonly AnimalRoadRepository _repository2 = new();
+        private readonly DiaryentryRepository _repository3 = new();
 
         // Get all
         [HttpGet]
@@ -52,6 +53,14 @@ namespace backend.Controllers
             var existItem = _repository.GetById(newItem.id);
             if (existItem == null)
             {
+                // Create related diaryentry
+                var newDiary = new backend.Models.Diaryentry
+                {
+                    id = "0",
+                    id_animal = $"{newItem.id}"
+                };
+                _repository3.Create(newDiary);
+
                 _repository.Create(newItem);
                 return NoContent();
             }
@@ -97,6 +106,9 @@ namespace backend.Controllers
         {
             // delete all links to roads
             _repository2.DeleteByAnimal(id);
+
+            // delete related diaryentry
+            _repository3.DeleteByAnimal(id);
 
             _repository.Delete(id);
             return NoContent();
