@@ -1,0 +1,6 @@
+<ui:VisualElement xmlns:ui="UnityEngine.UIElements">
+    <ui:TextField label="ID" binding-path="id" />
+    <ui:TextField label="Name" binding-path="name" />
+    <ui:TextField label="Animationlink" binding-path="animationlink" />
+    <ui:TextField label="Habitat" binding-path="habitat" />
+</ui:VisualElement>

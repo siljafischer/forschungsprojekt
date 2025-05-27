@@ -13,6 +13,9 @@ namespace Assets.ViewModels
         private readonly AnimalService _animalService;
         public ObservableCollection<Animal> Animals { get; private set; }
 
+        // aktuell ausgewähltes Tier, das ans UI gebunden wird
+        public Animal SelectedAnimal { get; private set; }
+
         public AnimalViewModel()
         {
             _animalService = new AnimalService();
@@ -27,20 +30,12 @@ namespace Assets.ViewModels
             {
                 Animals.Add(animal);
             }
-        }
 
-        // Bewegung per Transform
-        /*public void MoveAnimalRequested(GameObject instance)
-        {
-            if (instance != null)
+            if (Animals.Count > 0)
             {
-                var mb = instance.GetComponent<MonoBehaviourBridge>();
-                if (mb != null)
-                {
-                    mb.StartCoroutine(MovementLibrary.MoveByTransform(instance, Vector3.left * 3f, 1.5f));
-                }
+                SelectedAnimal = Animals[2]; // Beispiel: Erstes Tier auswählen
             }
-        }*/
+        }
 
         // Bewegung per CreatureMover
         public void MoveAnimalWithMoverRequested(GameObject instance)

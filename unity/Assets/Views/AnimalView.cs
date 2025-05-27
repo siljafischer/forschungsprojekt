@@ -2,11 +2,15 @@
 using Assets.ViewModels;
 using System.Collections;
 using System.Threading.Tasks;
+using UnityEngine.UIElements;
+using Assets.Models;
 
+[RequireComponent(typeof(UIDocument))]
 public class AnimalView : MonoBehaviour
 {
     private AnimalViewModel _viewModel;
     private GameObject _animalInstance;
+    private VisualElement _root;
 
     private void Start()
     {
@@ -16,6 +20,7 @@ public class AnimalView : MonoBehaviour
 
     private IEnumerator LoadAndDisplayAnimals()
     {
+        // Tiere laden über ViewModel
         Task loadTask = _viewModel.LoadAllAnimalsAsync();
         yield return new WaitUntil(() => loadTask.IsCompleted);
 
@@ -25,26 +30,40 @@ public class AnimalView : MonoBehaviour
             yield break;
         }
 
-        var animal = _viewModel.Animals[2]; // Beispiel
+        // Zugriff auf das ausgewählte Tier
+        var selectedAnimal = _viewModel.SelectedAnimal;
 
+        // UIDocument laden und an UI Toolkit anbinden
+        var uiDocument = GetComponent<UIDocument>();
+        _root = uiDocument.rootVisualElement;
 
-        GameObject prefab = Resources.Load<GameObject>(animal.animationlink);
+        if (_root == null)
+        {
+            Debug.LogError("Kein Root VisualElement gefunden.");
+            yield break;
+        }
+
+        // DataBinding mit dem ausgewählten Tier
+        _root.dataSource = selectedAnimal;
+
+        // Tier-Prefab laden und instanziieren
+        GameObject prefab = Resources.Load<GameObject>(selectedAnimal.animationlink);
         if (prefab == null)
         {
-            Debug.LogError($"Konnte Prefab nicht finden unter: Resources/{animal.animationlink}.prefab");
+            Debug.LogError($"Konnte Prefab nicht finden unter: Resources/{selectedAnimal.animationlink}.prefab");
             yield break;
         }
 
         _animalInstance = Instantiate(prefab);
 
+        // Tier positionieren
         Camera cam = Camera.main;
-        _animalInstance.transform.position = cam.transform.position + cam.transform.forward * 3f + cam.transform.up * -1f; // etwas nach unten
+        _animalInstance.transform.position = cam.transform.position + cam.transform.forward * 3f + cam.transform.up * -1f;
 
         _animalInstance.AddComponent<MonoBehaviourBridge>();
 
-        // ViewModel beauftragt die Bewegung (via Component oder direkt)
+        // Bewegung nach kurzer Pause starten
         yield return new WaitForSeconds(3f);
-        //_viewModel.MoveAnimalRequested(_animalInstance);             // → transform
-        _viewModel.MoveAnimalWithMoverRequested(_animalInstance);    // → CreatureMover
+        _viewModel.MoveAnimalWithMoverRequested(_animalInstance);
     }
 }
