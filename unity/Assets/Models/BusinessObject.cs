@@ -3,6 +3,7 @@ using System;
 
 namespace Assets.Models
 {
+    // serializable for databinding
     [Serializable]
     public class BusinessObject
     {

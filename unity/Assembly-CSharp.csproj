@@ -62,21 +62,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ViewModels\AnimalViewModel.cs" />
+    <Compile Include="Assets\ithappy\Animals_FREE\Scripts\CreatureMovement.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Views\AnimalView.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\MovePlayerInput.cs" />
-    <Compile Include="Assets\Helpers\MonoBehaviourBridge.cs" />
+    <Compile Include="Assets\Library\CreatureMover.cs" />
+    <Compile Include="Assets\Library\MovementLibrary.cs" />
+    <Compile Include="Assets\Library\MonoBehaviourBridge.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Services\AnimalService.cs" />
-    <Compile Include="Assets\Helpers\MovementLibrary.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\PlayerCamera.cs" />
-    <Compile Include="Assets\ithappy\Animals_FREE\Scripts\CreatureMover.cs" />
     <Compile Include="Assets\Models\Animal.cs" />
     <Compile Include="Assets\Models\BusinessObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ithappy\Animals_FREE\Render_Pipeline_Convert\Documentation.txt" />
-    <None Include="Assets\Views\AnimalList.uxml" />
+    <None Include="Assets\Resources\AnimalList.uxml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

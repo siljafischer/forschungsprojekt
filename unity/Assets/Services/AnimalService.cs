@@ -23,7 +23,7 @@ namespace Assets.Services
             };
         }
 
-        // Wrapper-Klasse, um das JSON-Array als Objekt zu behandeln
+        // wrapper class --> json to usable objects
         [Serializable]
         public class AnimalListWrapper
         {
@@ -39,28 +39,24 @@ namespace Assets.Services
                 // GET request an die API
                 var response = await _httpClient.GetAsync("Animal");
 
-                // Überprüfen, ob die Antwort erfolgreich war
                 if (response.IsSuccessStatusCode)
                 {
-                    // Hole die JSON-Antwort als String
+                    // json-answer
                     var json = await response.Content.ReadAsStringAsync();
                     string wrappedJson = "{\"animals\":" + json + "}";
+                    // into usable objects
                     AnimalListWrapper wrapper = JsonUtility.FromJson<AnimalListWrapper>(wrappedJson);
-                    Debug.Log("Anzahl Tiere: " + (wrapper.animals != null ? wrapper.animals.Count : 0));
 
-                    // Rückgabe der Liste von Tieren
                     return wrapper.animals;
                 }
                 else
                 {
-                    // Fehler: Leere Liste zurückgeben
                     Debug.Log("Keine Tiere gefunden");
                     return new List<Animal>();
                 }
             }
             catch (Exception ex)
             {
-                // Fehler beim Abrufen der Daten
                 Debug.LogError($"Fehler: {ex.Message}");
                 return new List<Animal>();
             }
