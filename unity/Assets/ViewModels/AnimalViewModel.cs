@@ -54,8 +54,8 @@ namespace Assets.ViewModels
                 if (mover != null && mb != null)
                 {
                     // move: run away
-                    mb.StartCoroutine(MovementLibrary.Run(mover));
-                    //mb.StartCoroutine(MovementLibrary.Run(mover, speed: 0.1f, duration: 2f));
+                    //mb.StartCoroutine(MovementLibrary.WalkNormal(mover));
+                    mb.StartCoroutine(MovementLibrary.RunAway(mover));
                     // here second coroutine: will not work: coroutines dont bloxk and move over
                 }
             }
