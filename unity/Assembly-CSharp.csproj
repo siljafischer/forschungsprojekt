@@ -62,10 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ViewModels\AnimalViewModel.cs" />
+    <Compile Include="Assets\Models\User.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\CreatureMovement.cs" />
+    <Compile Include="Assets\ViewModels\UserViewModel.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Views\AnimalView.cs" />
+    <Compile Include="Assets\Views\UserView.cs" />
     <Compile Include="Assets\ithappy\Animals_FREE\Scripts\MovePlayerInput.cs" />
+    <Compile Include="Assets\Services\UserService.cs" />
     <Compile Include="Assets\Library\CreatureMover.cs" />
     <Compile Include="Assets\Library\MovementLibrary.cs" />
     <Compile Include="Assets\Library\MonoBehaviourBridge.cs" />
@@ -76,6 +80,7 @@
     <Compile Include="Assets\Models\BusinessObject.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Resources\UserList.uxml" />
     <None Include="Assets\ithappy\Animals_FREE\Render_Pipeline_Convert\Documentation.txt" />
     <None Include="Assets\Resources\AnimalList.uxml" />
   </ItemGroup>
