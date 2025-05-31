@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿// IN DIESER DATEI LOGINFORMULAR VERLINKEN --> BUTTONS VMTL IN RESOURCES/USERLIST.UXML EINBINDEN
+using UnityEngine;
 using Assets.ViewModels;
 using System.Collections;
 using System.Threading.Tasks;
@@ -12,24 +13,26 @@ public class UserView : MonoBehaviour
 {
     // connection to viewmodel (View Model contains Logic)
     private UserViewModel _viewModel;
-    // stores current selected user (only one for databinding) --> OBSOLET WENN GETUSERBYUSERNAME
+    // stores current selected user (only one for databinding)
     private GameObject _userInstance;
     // root of UI --> acceess UI (e.g. change text, use buttons)
+    [SerializeField] private UIDocument _uiDocument;
     private VisualElement _root;
 
     // automatic call: activate object (e.g. gamestart)
     private void Start()
     {
         _viewModel = new UserViewModel();
-        // load animals async (Coroutine ~ async/await: wait but dont block game)
+        // LOAD BY START --> SOLLTE FÜR LOGIN GEÄNDERT/ENTFERNT WERDEN
+        // load users async (Coroutine ~ async/await: wait but dont block game)
         StartCoroutine(LoadAndDisplayUser());
     }
 
-    // load and show animal
+    // load and show user
     private IEnumerator LoadAndDisplayUser()
     {
-        // load user --> ÄNDERN, WENN GETUSERBYUSERNAME
-        Task loadTask = _viewModel.LoadAllUsersAsync();
+        // load user
+        Task loadTask = _viewModel.LoadUserByUsernameAsync();
         // called by Coroutine --> WaitUntil ~ async/await: wait until task ist completed)
         yield return new WaitUntil(() => loadTask.IsCompleted);
 
@@ -39,7 +42,7 @@ public class UserView : MonoBehaviour
             yield break;
         }
 
-        // get selected user from view model (--> initiated load and now get the selected user) --> OBSOLET WENN S.O.?
+        // get selected user from view model (--> initiated load and now get the selected user)
         var selectedUser = _viewModel.SelectedUser;
 
 
@@ -53,14 +56,14 @@ public class UserView : MonoBehaviour
             yield break;
         }
         GetComponent<UIDocument>().rootVisualElement.Add(_root);
-        // dataSource connects UI <-> selectedAnimal
+        // dataSource connects UI <-> selectedUser
         _root.dataSource = selectedUser;
 
 
         // show user id in console --> ONLY FOR TESTING
         if (selectedUser != null)
         {
-            Debug.LogError($"Folgenden User gefunden {selectedUser.username}.prefab");
+            Debug.LogFormat($"Folgenden User gefunden {selectedUser.name}: {selectedUser.username}");
             yield break;
         }
     }

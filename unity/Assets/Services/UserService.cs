@@ -95,7 +95,7 @@ namespace Assets.Services
         }
 
         // get User by username
-        public async Task<List<User>> GetUserByUsername(int username)
+        public async Task<List<User>> GetUserByUsername(string username)
         {
             try
             {

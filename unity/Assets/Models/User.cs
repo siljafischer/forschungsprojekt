@@ -48,7 +48,7 @@ namespace Assets.Models
                 }
             }
         }
-        public string Usernamelink
+        public string Username
         {
             get => username;
             set
