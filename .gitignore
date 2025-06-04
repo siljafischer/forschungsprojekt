@@ -26,6 +26,4 @@
 /.idea
 /backend/backend/.vs/ProjectEvaluation
 /unity/Assets/ithappy/
-/unity/Assets/Resources/ImmersiveDebuggerSettings.asset.meta
-/unity/Assets/ithappy.meta
-/unity/Assets/Resources.meta
+!*.meta
