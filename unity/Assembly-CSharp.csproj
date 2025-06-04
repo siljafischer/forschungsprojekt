@@ -1065,6 +1065,10 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.47f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.XR.Interaction.Toolkit.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.Interaction.Toolkit.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Meta.XR.BuildingBlocks.DepthAPI.Editor">
       <HintPath>Library\ScriptAssemblies\Meta.XR.BuildingBlocks.DepthAPI.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1133,6 +1137,10 @@
       <HintPath>Library\ScriptAssemblies\Oculus.Interaction.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Meta.XR.Editor.Id">
+      <HintPath>Library\ScriptAssemblies\Meta.XR.Editor.Id.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="meta.xr.mrutilitykit">
       <HintPath>Library\ScriptAssemblies\meta.xr.mrutilitykit.dll</HintPath>
       <Private>False</Private>
@@ -1145,8 +1153,6 @@
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Meta.XR.Editor.Id">
-      <HintPath>Library\ScriptAssemblies\Meta.XR.Editor.Id.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
@@ -1217,6 +1223,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.XR.Hands.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.Hands.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Meta.WitAi.Lib">
       <HintPath>Library\ScriptAssemblies\Meta.WitAi.Lib.dll</HintPath>
       <Private>False</Private>
@@ -1279,6 +1289,10 @@
     </Reference>
     <Reference Include="VoiceSDK.Telemetry.Runtime">
       <HintPath>Library\ScriptAssemblies\VoiceSDK.Telemetry.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.XR.Hands">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.Hands.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Oculus.Platform">
@@ -1635,6 +1649,10 @@
     </Reference>
     <Reference Include="Unity.XR.ARAnalytics.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.XR.ARAnalytics.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.XR.Interaction.Toolkit">
+      <HintPath>Library\ScriptAssemblies\Unity.XR.Interaction.Toolkit.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.EditorCoroutines.Editor">
