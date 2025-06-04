@@ -6,6 +6,6 @@ public class NewMonoBehaviourScript : MonoBehaviour
     // When LoginButton pressed
     public void OnLoginPressed()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("first_steps");
     }
 }

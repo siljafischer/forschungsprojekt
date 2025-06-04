@@ -5,7 +5,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using Assets.Models;
-using Oculus.Platform;
+//using Oculus.Platform;
 
 // gets UIDocument-Component 
 [RequireComponent(typeof(UIDocument))]
