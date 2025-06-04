@@ -19,7 +19,7 @@ namespace Assets.Services
         {
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://localhost:7254")
+                BaseAddress = new Uri("https://localhost:7167")
             };
         }
 

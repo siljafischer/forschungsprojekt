@@ -128,9 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 252084104}
-  - component: {fileID: 252084103}
   - component: {fileID: 252084105}
   - component: {fileID: 252084106}
+  - component: {fileID: 252084107}
   m_Layer: 0
   m_Name: AnimalTest
   m_TagString: Untagged
@@ -138,18 +138,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &252084103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 252084102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16b422a835312234091bc105c86a51d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &252084104
 Transform:
   m_ObjectHideFlags: 0
@@ -193,10 +181,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 252084102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7bcdc5f3b5a69341bcac566a8dedf82, type: 3}
+  m_Script: {fileID: 11500000, guid: 5793828c033bae742bd4cf9e22c65161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _uiDocument: {fileID: 0}
+--- !u!114 &252084107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252084102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b422a835312234091bc105c86a51d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &875871074
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,7 +502,7 @@ Terrain:
   m_GameObject: {fileID: 1554334693}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 57b9cb1399024f940ad4fd8c5b186597, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
