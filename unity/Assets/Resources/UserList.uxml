@@ -1,0 +1,12 @@
+<!-- enables databinding: if contains e.g. button: find UI-element -->
+<!-- ICH SCHÄTZE HIER DIE ANMELDEBUTTONS HINZUFÜGEN -->
+<engine:UIDocument xmlns:ui="UnityEngine.UIElements" xmlns:engine="UnityEngine.UIElements">
+    <ui:VisualElement xmlns:ui="UnityEngine.UIElements">
+        <!-- binding path = binding of attributes-->
+        <ui:TextField label="ID" binding-path="id" />
+        <ui:TextField label="Name" binding-path="name" />
+        <ui:TextField label="Username" binding-path="username" />
+        <ui:TextField label="Mail" binding-path="mail" />
+        <ui:TextField label="Password" binding-path="password" />
+    </ui:VisualElement>
+</engine:UIDocument>

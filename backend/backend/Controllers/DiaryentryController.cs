@@ -12,12 +12,11 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AnimalController : ControllerBase
+    public class DiaryentryController : ControllerBase
     {
-        /// Use connector to calnedar-database!
-        private readonly AnimalRepository _repository = new();
-        private readonly AnimalRoadRepository _repository2 = new();
-        private readonly DiaryentryRepository _repository3 = new();
+        /// Use connector to database!
+        private readonly DiaryentryRepository _repository = new();
+        private readonly DiaryDiaryentryRepository _repository2 = new();
 
         // Get all
         [HttpGet]
@@ -42,49 +41,41 @@ namespace backend.Controllers
 
         // Create
         [HttpPost("create")]
-        public IActionResult Create([FromBody] backend.Models.Animal newItem)
+        public IActionResult Create([FromBody] backend.Models.Diaryentry newItem)
         {
             // id = + 1 --> prevent conflicts
-            var allAnimals = _repository.GetAll();
-            int maxId = allAnimals.Any() ? allAnimals.Max(c => int.Parse(c.id)) : 0;
+            var allEntries = _repository.GetAll();
+            int maxId = allEntries.Any() ? allEntries.Max(c => int.Parse(c.id)) : 0;
             newItem.id = (maxId + 1).ToString();
 
             // only create, if id not in database (double-check)
             var existItem = _repository.GetById(newItem.id);
             if (existItem == null)
             {
-                // Create related diaryentry
-                var newDiary = new backend.Models.Diaryentry
-                {
-                    id = null,
-                    id_animal = $"{newItem.id}"
-                };
-                _repository3.CreateFromAnimal(newDiary);
-
                 _repository.Create(newItem);
                 return NoContent();
             }
             else
             {
-                var errorResponse = new { message = $"Tier mit  ID {newItem.id} bereits vorhanden" };
+                var errorResponse = new { message = $"Eintrag mit  ID {newItem.id} bereits vorhanden" };
                 System.Diagnostics.Debug.WriteLine(errorResponse);
                 return Conflict(errorResponse);
             }
         }
 
-        // Create Link To Road
-        [HttpPost("createLinkToRoad")]
-        public IActionResult CreateLinkToRoad([FromBody] backend.Models.AnimalRoad newItem) { 
 
+        // Create link to diary
+        [HttpPost("createLinkToDiary")]
+        public IActionResult CreateLinkToDiary([FromBody] backend.Models.DiaryDiaryentry newItem)
+        {
             _repository2.Create(newItem);
             return NoContent();
-
         }
 
 
         // Update
         [HttpPut("update/{id}")]
-        public IActionResult Update([FromBody] backend.Models.Animal updatedItem)
+        public IActionResult Update([FromBody] backend.Models.Diaryentry updatedItem)
         {
             var existingItem = _repository.GetById(updatedItem.id);
             if (existingItem == null)
@@ -92,9 +83,7 @@ namespace backend.Controllers
                 return NotFound();
             }
             updatedItem.id = updatedItem.id;
-            updatedItem.name = updatedItem.name;
-            updatedItem.animationlink = updatedItem.animationlink;
-            updatedItem.habitat = updatedItem.habitat;
+            updatedItem.id_animal = updatedItem.id_animal;
             _repository.Update(updatedItem);
             return NoContent();
         }
@@ -104,13 +93,21 @@ namespace backend.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
-            // delete all links to roads
-            _repository2.DeleteByAnimal(id);
-
-            // delete related diaryentry
-            _repository3.DeleteByAnimal(id);
+            // delete all links to diary
+            _repository2.DeleteByDiaryentry(id);
 
             _repository.Delete(id);
+            return NoContent();
+        }
+
+        // Delete by animal
+        [HttpDelete("deleteByAnimal/{id}")]
+        public IActionResult DeleteByAnimal(string id)
+        {
+            // delete all links to diary
+            _repository2.DeleteByDiaryentry(id);
+
+            _repository.DeleteByAnimal(id);
             return NoContent();
         }
     }

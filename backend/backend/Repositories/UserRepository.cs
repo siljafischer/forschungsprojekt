@@ -8,14 +8,14 @@ using backend.Models;
 
 namespace backend.Repositories
 {
-    public class AnimalRepository
+    public class UserRepository
     {
         // _ = List
-        private readonly List<Animal> _items = new();
-        private readonly string _csvFilePath = "db_sim_animal.csv";
+        private readonly List<User> _items = new();
+        private readonly string _csvFilePath = "db_sim_user.csv";
         private bool _initialized = false;
 
-        public AnimalRepository()
+        public UserRepository()
         {
             if (!_initialized)
             {
@@ -37,12 +37,13 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    _items.Add(new Animal
+                    _items.Add(new User
                     {
                         id = values[0],
                         name = values[1],
-                        animationlink = values[2],
-                        habitat = values[3]
+                        username = values[2],
+                        mail = values[3],
+                        password = values[4]
                     });
 
                 }
@@ -56,24 +57,27 @@ namespace backend.Repositories
         private void SaveDataToCsv()
         {
             // header
-            var lines = new List<string> { "id;name;animationlink;habitat" };
+            var lines = new List<string> { "id;name;username;mail;password" };
             // values
-            lines.AddRange(_items.Select(item => $"{item.id};{item.name};{item.animationlink};{item.habitat}"));
+            lines.AddRange(_items.Select(item => $"{item.id};{item.name};{item.username};{item.mail};{item.password}"));
             // save
             File.WriteAllLines(_csvFilePath, lines);
         }
 
 
         // get all : LINQ
-        public IEnumerable<Animal> GetAll() => _items;
+        public IEnumerable<User> GetAll() => _items;
 
 
         // get first with id (only one per id)
-        public Animal GetById(string id) => _items.FirstOrDefault(item => item.id == id);
+        public User GetById(string id) => _items.FirstOrDefault(item => item.id == id);
+
+        // get first with username (only one per username)
+        public User GetByUsername(string username) => _items.FirstOrDefault(item => item.username == username);
 
 
         // Create
-        public void Create(Animal item)
+        public void Create(User item)
         {
             _items.Add(item);
             // save current status
@@ -82,15 +86,16 @@ namespace backend.Repositories
 
 
         // Update by id
-        public void Update(Animal item)
+        public void Update(User item)
         {
             var existingItem = _items.FirstOrDefault(i => i.id == item.id);
             if (existingItem != null)
             {
                 existingItem.id = item.id;
                 existingItem.name = item.name;
-                existingItem.animationlink = item.animationlink;
-                existingItem.habitat = item.habitat;
+                existingItem.username = item.username;
+                existingItem.mail = item.mail;
+                existingItem.password = item.password;
                 // save current status
                 SaveDataToCsv();
             }

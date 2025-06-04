@@ -1,0 +1,10 @@
+<!-- enables databinding: if contains e.g. button: find UI-element -->
+<engine:UIDocument xmlns:ui="UnityEngine.UIElements" xmlns:engine="UnityEngine.UIElements">
+    <ui:VisualElement xmlns:ui="UnityEngine.UIElements">
+        <!-- binding path = binding of attributes-->
+        <ui:TextField label="ID" binding-path="id" />
+        <ui:TextField label="Name" binding-path="name" />
+        <ui:TextField label="Animationlink" binding-path="animationlink" />
+        <ui:TextField label="Habitat" binding-path="habitat" />
+    </ui:VisualElement>
+</engine:UIDocument>

@@ -8,14 +8,14 @@ using backend.Models;
 
 namespace backend.Repositories
 {
-    public class AnimalRepository
+    public class ElementRepository
     {
         // _ = List
-        private readonly List<Animal> _items = new();
-        private readonly string _csvFilePath = "db_sim_animal.csv";
+        private readonly List<Element> _items = new();
+        private readonly string _csvFilePath = "db_sim_element.csv";
         private bool _initialized = false;
 
-        public AnimalRepository()
+        public ElementRepository()
         {
             if (!_initialized)
             {
@@ -37,12 +37,10 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    _items.Add(new Animal
+                    _items.Add(new Element
                     {
                         id = values[0],
-                        name = values[1],
-                        animationlink = values[2],
-                        habitat = values[3]
+                        animationlink = values[1]
                     });
 
                 }
@@ -58,22 +56,21 @@ namespace backend.Repositories
             // header
             var lines = new List<string> { "id;name;animationlink;habitat" };
             // values
-            lines.AddRange(_items.Select(item => $"{item.id};{item.name};{item.animationlink};{item.habitat}"));
+            lines.AddRange(_items.Select(item => $"{item.id};{item.animationlink}"));
             // save
             File.WriteAllLines(_csvFilePath, lines);
         }
 
-
         // get all : LINQ
-        public IEnumerable<Animal> GetAll() => _items;
+        public IEnumerable<Element> GetAll() => _items;
 
 
         // get first with id (only one per id)
-        public Animal GetById(string id) => _items.FirstOrDefault(item => item.id == id);
+        public Element GetById(string id) => _items.FirstOrDefault(item => item.id == id);
 
 
         // Create
-        public void Create(Animal item)
+        public void Create(Element item)
         {
             _items.Add(item);
             // save current status
@@ -82,15 +79,13 @@ namespace backend.Repositories
 
 
         // Update by id
-        public void Update(Animal item)
+        public void Update(Element item)
         {
             var existingItem = _items.FirstOrDefault(i => i.id == item.id);
             if (existingItem != null)
             {
                 existingItem.id = item.id;
-                existingItem.name = item.name;
                 existingItem.animationlink = item.animationlink;
-                existingItem.habitat = item.habitat;
                 // save current status
                 SaveDataToCsv();
             }

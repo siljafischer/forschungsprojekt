@@ -8,14 +8,14 @@ using backend.Models;
 
 namespace backend.Repositories
 {
-    public class AnimalRepository
+    public class DiaryentryRepository
     {
         // _ = List
-        private readonly List<Animal> _items = new();
-        private readonly string _csvFilePath = "db_sim_animal.csv";
+        private readonly List<Diaryentry> _items = new();
+        private readonly string _csvFilePath = "db_sim_diaryentry.csv";
         private bool _initialized = false;
 
-        public AnimalRepository()
+        public DiaryentryRepository()
         {
             if (!_initialized)
             {
@@ -37,12 +37,10 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    _items.Add(new Animal
+                    _items.Add(new Diaryentry
                     {
                         id = values[0],
-                        name = values[1],
-                        animationlink = values[2],
-                        habitat = values[3]
+                        id_animal = values[1]
                     });
 
                 }
@@ -56,25 +54,37 @@ namespace backend.Repositories
         private void SaveDataToCsv()
         {
             // header
-            var lines = new List<string> { "id;name;animationlink;habitat" };
+            var lines = new List<string> { "id;id_animal" };
             // values
-            lines.AddRange(_items.Select(item => $"{item.id};{item.name};{item.animationlink};{item.habitat}"));
+            lines.AddRange(_items.Select(item => $"{item.id};{item.id_animal}"));
             // save
             File.WriteAllLines(_csvFilePath, lines);
         }
 
-
         // get all : LINQ
-        public IEnumerable<Animal> GetAll() => _items;
+        public IEnumerable<Diaryentry> GetAll() => _items;
 
 
         // get first with id (only one per id)
-        public Animal GetById(string id) => _items.FirstOrDefault(item => item.id == id);
+        public Diaryentry GetById(string id) => _items.FirstOrDefault(item => item.id == id);
 
 
         // Create
-        public void Create(Animal item)
+        public void Create(Diaryentry item)
         {
+            _items.Add(item);
+            // save current status
+            SaveDataToCsv();
+        }
+
+        // Create frrom animal
+        public void CreateFromAnimal(Diaryentry item)
+        {
+            // id = + 1 --> prevent conflicts
+            var allEntries = GetAll();
+            int maxId = allEntries.Any() ? allEntries.Max(c => int.Parse(c.id)) : 0;
+            item.id = (maxId + 1).ToString();
+
             _items.Add(item);
             // save current status
             SaveDataToCsv();
@@ -82,15 +92,13 @@ namespace backend.Repositories
 
 
         // Update by id
-        public void Update(Animal item)
+        public void Update(Diaryentry item)
         {
             var existingItem = _items.FirstOrDefault(i => i.id == item.id);
             if (existingItem != null)
             {
                 existingItem.id = item.id;
-                existingItem.name = item.name;
-                existingItem.animationlink = item.animationlink;
-                existingItem.habitat = item.habitat;
+                existingItem.id_animal = item.id_animal;
                 // save current status
                 SaveDataToCsv();
             }
@@ -101,6 +109,15 @@ namespace backend.Repositories
         public void Delete(string id)
         {
             _items.RemoveAll(item => item.id == id);
+            // save current status
+            SaveDataToCsv();
+
+        }
+
+        // Delete by animal
+        public void DeleteByAnimal(string id)
+        {
+            _items.RemoveAll(item => item.id_animal == id);
             // save current status
             SaveDataToCsv();
 

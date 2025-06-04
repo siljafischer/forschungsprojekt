@@ -8,14 +8,14 @@ using backend.Models;
 
 namespace backend.Repositories
 {
-    public class AnimalRepository
+    public class DiaryRepository
     {
         // _ = List
-        private readonly List<Animal> _items = new();
-        private readonly string _csvFilePath = "db_sim_animal.csv";
+        private readonly List<Diary> _items = new();
+        private readonly string _csvFilePath = "db_sim_diary.csv";
         private bool _initialized = false;
 
-        public AnimalRepository()
+        public DiaryRepository()
         {
             if (!_initialized)
             {
@@ -23,7 +23,6 @@ namespace backend.Repositories
                 _initialized = true;
             }
         }
-
 
         // read and save to csv --> current storage
         private void LoadDataFromCsv()
@@ -37,12 +36,10 @@ namespace backend.Repositories
                 {
                     var values = line.Split(';');
 
-                    _items.Add(new Animal
+                    _items.Add(new Diary
                     {
                         id = values[0],
-                        name = values[1],
-                        animationlink = values[2],
-                        habitat = values[3]
+                        user = values[1]
                     });
 
                 }
@@ -52,29 +49,42 @@ namespace backend.Repositories
                 System.Diagnostics.Debug.WriteLine($"Datei nicht gefunden: {_csvFilePath}");
             }
         }
-
         private void SaveDataToCsv()
         {
             // header
-            var lines = new List<string> { "id;name;animationlink;habitat" };
+            var lines = new List<string> { "id;user" };
             // values
-            lines.AddRange(_items.Select(item => $"{item.id};{item.name};{item.animationlink};{item.habitat}"));
+            lines.AddRange(_items.Select(item => $"{item.id};{item.user}"));
             // save
             File.WriteAllLines(_csvFilePath, lines);
         }
 
-
         // get all : LINQ
-        public IEnumerable<Animal> GetAll() => _items;
-
+        public IEnumerable<Diary> GetAll() => _items;
 
         // get first with id (only one per id)
-        public Animal GetById(string id) => _items.FirstOrDefault(item => item.id == id);
+        public Diary GetById(string id) => _items.FirstOrDefault(item => item.id == id);
+
+        // get first with user (only one per id)
+        public Diary GetByUser(string user) => _items.FirstOrDefault(item => item.user == user);
 
 
         // Create
-        public void Create(Animal item)
+        public void Create(Diary item)
         {
+            _items.Add(item);
+            // save current status
+            SaveDataToCsv();
+        }
+
+        // Create
+        public void CreateByUser(Diary item)
+        {
+            // id = + 1 --> prevent conflicts
+            var allEntries = GetAll();
+            int maxId = allEntries.Any() ? allEntries.Max(c => int.Parse(c.id)) : 0;
+            item.id = (maxId + 1).ToString();
+
             _items.Add(item);
             // save current status
             SaveDataToCsv();
@@ -82,15 +92,13 @@ namespace backend.Repositories
 
 
         // Update by id
-        public void Update(Animal item)
+        public void Update(Diary item)
         {
             var existingItem = _items.FirstOrDefault(i => i.id == item.id);
             if (existingItem != null)
             {
                 existingItem.id = item.id;
-                existingItem.name = item.name;
-                existingItem.animationlink = item.animationlink;
-                existingItem.habitat = item.habitat;
+                existingItem.user = item.user;
                 // save current status
                 SaveDataToCsv();
             }
@@ -101,6 +109,15 @@ namespace backend.Repositories
         public void Delete(string id)
         {
             _items.RemoveAll(item => item.id == id);
+            // save current status
+            SaveDataToCsv();
+
+        }
+
+        // Delete by user
+        public void DeleteByUser(string id)
+        {
+            _items.RemoveAll(item => item.user == id);
             // save current status
             SaveDataToCsv();
 

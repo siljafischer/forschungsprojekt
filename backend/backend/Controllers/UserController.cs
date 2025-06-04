@@ -12,12 +12,12 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AnimalController : ControllerBase
+    public class UserController : ControllerBase
     {
-        /// Use connector to calnedar-database!
-        private readonly AnimalRepository _repository = new();
-        private readonly AnimalRoadRepository _repository2 = new();
-        private readonly DiaryentryRepository _repository3 = new();
+        /// Use connector to database!
+        private readonly UserRepository _repository = new();
+        private readonly DiaryRepository _repository2 = new();
+        private readonly DiaryDiaryentryRepository _repository3 = new();
 
         // Get all
         [HttpGet]
@@ -40,51 +40,55 @@ namespace backend.Controllers
             return Ok(item);
         }
 
+        // GetByUsername
+        [HttpGet("allByUsername/{username}")]
+        public IActionResult GetByUsername(string username)
+        {
+            var item = _repository.GetByUsername(username);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
         // Create
         [HttpPost("create")]
-        public IActionResult Create([FromBody] backend.Models.Animal newItem)
+        public IActionResult Create([FromBody] backend.Models.User newItem)
         {
             // id = + 1 --> prevent conflicts
-            var allAnimals = _repository.GetAll();
-            int maxId = allAnimals.Any() ? allAnimals.Max(c => int.Parse(c.id)) : 0;
+            var allUsers = _repository.GetAll();
+            int maxId = allUsers.Any() ? allUsers.Max(c => int.Parse(c.id)) : 0;
             newItem.id = (maxId + 1).ToString();
 
-            // only create, if id not in database (double-check)
+            // only create, if id AND username not in database (double-check)
             var existItem = _repository.GetById(newItem.id);
-            if (existItem == null)
+            var existItem2 = _repository.GetByUsername(newItem.username);
+            if (existItem == null && existItem2 == null)
             {
-                // Create related diaryentry
-                var newDiary = new backend.Models.Diaryentry
+                // Create related diary
+                var newDiary = new backend.Models.Diary
                 {
-                    id = null,
-                    id_animal = $"{newItem.id}"
+                    id = "0",
+                    user = $"{newItem.id}"
                 };
-                _repository3.CreateFromAnimal(newDiary);
+                _repository2.CreateByUser(newDiary);
 
                 _repository.Create(newItem);
                 return NoContent();
             }
             else
             {
-                var errorResponse = new { message = $"Tier mit  ID {newItem.id} bereits vorhanden" };
+                var errorResponse = new { message = $"Nutzer mit  ID {newItem.id} oder Name {newItem.username} bereits vorhanden" };
                 System.Diagnostics.Debug.WriteLine(errorResponse);
                 return Conflict(errorResponse);
             }
         }
 
-        // Create Link To Road
-        [HttpPost("createLinkToRoad")]
-        public IActionResult CreateLinkToRoad([FromBody] backend.Models.AnimalRoad newItem) { 
-
-            _repository2.Create(newItem);
-            return NoContent();
-
-        }
-
 
         // Update
         [HttpPut("update/{id}")]
-        public IActionResult Update([FromBody] backend.Models.Animal updatedItem)
+        public IActionResult Update([FromBody] backend.Models.User updatedItem)
         {
             var existingItem = _repository.GetById(updatedItem.id);
             if (existingItem == null)
@@ -93,8 +97,9 @@ namespace backend.Controllers
             }
             updatedItem.id = updatedItem.id;
             updatedItem.name = updatedItem.name;
-            updatedItem.animationlink = updatedItem.animationlink;
-            updatedItem.habitat = updatedItem.habitat;
+            updatedItem.username = updatedItem.username;
+            updatedItem.mail = updatedItem.mail;
+            updatedItem.password = updatedItem.password;
             _repository.Update(updatedItem);
             return NoContent();
         }
@@ -104,11 +109,14 @@ namespace backend.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete(string id)
         {
-            // delete all links to roads
-            _repository2.DeleteByAnimal(id);
+            // Delete links to entries
+            // get diary id
+            var item = _repository2.GetByUser(id);
+            var diaryid = item.id;
+            _repository3.DeleteByDiary(diaryid);
 
-            // delete related diaryentry
-            _repository3.DeleteByAnimal(id);
+            // Delete diary
+            _repository2.DeleteByUser(id);
 
             _repository.Delete(id);
             return NoContent();
