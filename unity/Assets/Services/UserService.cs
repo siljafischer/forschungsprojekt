@@ -10,19 +10,8 @@ using UnityEngine;
 
 namespace Assets.Services
 {
-    public class UserService
+    public class UserService : MainService
     {
-        private readonly HttpClient _httpClient;
-
-        // Base URL
-        public UserService()
-        {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("https://localhost:7254")
-            };
-        }
-
         // wrapper class --> json to usable objects
         [Serializable]
         public class UserListWrapper

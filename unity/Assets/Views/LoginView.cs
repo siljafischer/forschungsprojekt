@@ -1,15 +1,16 @@
 ﻿// IN DIESER DATEI LOGINFORMULAR VERLINKEN --> BUTTONS VMTL IN RESOURCES/USERLIST.UXML EINBINDEN
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Assets.ViewModels;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using Assets.Models;
-//using Oculus.Platform;
+using TMPro;
 
 // gets UIDocument-Component 
 [RequireComponent(typeof(UIDocument))]
-public class UserView : MonoBehaviour
+public class LoginView : MonoBehaviour
 {
     // connection to viewmodel (View Model contains Logic)
     private UserViewModel _viewModel;

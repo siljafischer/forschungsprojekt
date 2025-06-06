@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class LoginButton : MonoBehaviour
 {
     // When LoginButton pressed
     public void OnLoginPressed()
