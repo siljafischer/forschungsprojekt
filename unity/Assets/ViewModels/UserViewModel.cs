@@ -9,15 +9,12 @@ using Assets.Library;
 using UnityEngine.UIElements;
 using System;
 using System.Collections.Generic;
+using static UnityEditor.Profiling.HierarchyFrameDataView;
 
 namespace Assets.ViewModels
 {
     public class UserViewModel : INotifyBindablePropertyChanged
     {
-        // ENTFERNEN, WENN LOGINFORMULAR EINGEFÜGT
-        public string uname = "silly";
-
-
 
         // connection to model (--> services)
         private readonly UserService _userService;
@@ -29,7 +26,38 @@ namespace Assets.ViewModels
         // INotifyBindablePropertyChanged implementation
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        // Properties for binding
+        // variables as result of login
+        private string _loginUsername = "";
+        private string _loginPassword = "";
+
+
+        // Properties for login --> UI can use this Variables: updated with changes in UI
+        public string LoginUsername
+        {
+            get => _loginUsername;
+            set
+            {
+                if (_loginUsername != value)
+                {
+                    _loginUsername = value;
+                    NotifyPropertyChanged(nameof(LoginUsername));
+                }
+            }
+        }
+        public string LoginPassword
+        {
+            get => _loginPassword;
+            set
+            {
+                if (_loginPassword != value)
+                {
+                    _loginPassword = value;
+                    NotifyPropertyChanged(nameof(LoginPassword));
+                }
+            }
+        }
+
+        // selectedUser == current user --> automatic updates if user changed in UI <-> Model
         public User SelectedUSer
         {
             get => SelectedUser;
@@ -131,27 +159,42 @@ namespace Assets.ViewModels
         // load specific users --> C# async: load but dont block
         public async Task LoadUserByUsernameAsync()
         {
+
             Users.Clear();
             // call service (service calls api)
-            var users = await _userService.GetUserByUsername(uname);
+            // username gets automatically updated: user input
+            var users = await _userService.GetUserByUsername(LoginUsername);
             foreach (var user in users)
             {
                 Users.Add(user);
             }
-
-            if (Users.Count > 0)
+            // Authenticate
+            if (Users[0].password == LoginPassword)
             {
+                // set selectedUser
                 SelectedUser = Users[0];
+                // set logged user as current user for all other scenes
+                SessionData.CurrentUser = SelectedUser;
+            }
+            else
+            {
+                Debug.LogError("Falsches Passwort");
             }
         }
 
-        // HIER ÜBERPRÜFUNG, OB USER UND PASSWORT KORREKT SIND
-        // FEHLERMELDUNG WENN NICHT
 
         // IN DIESER DATEI AUCH MÖGLICHKEIT ZUR REGISTRIERUNG BIETEN
+        // safe user
+        public async void SaveUser()
+        {
+            if (SelectedUser != null)
+            {
+                await _userService.UpdateUserAsync(SelectedUser);
+            }
+        }
 
 
-        // Bindingstuff
+        // gets updates from model --> ViewModel can publish changes to UI --> UI gets updated
         private void SubscribeToUser(User user)
         {
             user.OnIdChanged += OnUserIdChanged;
@@ -192,13 +235,8 @@ namespace Assets.ViewModels
         {
             NotifyPropertyChanged(nameof(UserMail));
         }
-        public async void SaveUser()
-        {
-            if (SelectedUser != null)
-            {
-                await _userService.UpdateUserAsync(SelectedUser);
-            }
-        }
+
+        // connects ViewModel <-> UI --> informs about changes in property
         private void NotifyPropertyChanged(string propertyName)
         {
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(propertyName));

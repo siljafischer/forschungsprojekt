@@ -20,6 +20,11 @@ public class AnimalView : MonoBehaviour
     private void Start()
     {
         _viewModel = new AnimalViewModel();
+
+        // get current user from SessionData
+        var CurrentUser = SessionData.CurrentUser;
+        Debug.Log("Herzlich Willkommen, " + CurrentUser.Name + "! Los geht's, fotografiere dein erstes Tier!");
+
         // load animals async (Coroutine ~ async/await: wait but dont block game)
         StartCoroutine(LoadAndDisplayAnimals());
     }
