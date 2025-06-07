@@ -27,32 +27,58 @@ namespace Assets.ViewModels
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
         // variables as result of login
-        private string _loginUsername = "";
-        private string _loginPassword = "";
+        private string _Name = "";
+        private string _Username = "";
+        private string _Mail = "";
+        private string _Password = "";
 
 
-        // Properties for login --> UI can use this Variables: updated with changes in UI
-        public string LoginUsername
+        // Properties for login and account --> UI can use this Variables: updated with changes in UI
+        public string Name
         {
-            get => _loginUsername;
+            get => _Name;
             set
             {
-                if (_loginUsername != value)
+                if (_Name != value)
                 {
-                    _loginUsername = value;
-                    NotifyPropertyChanged(nameof(LoginUsername));
+                    _Name = value;
+                    NotifyPropertyChanged(nameof(Name));
                 }
             }
         }
-        public string LoginPassword
+        public string Username
         {
-            get => _loginPassword;
+            get => _Username;
             set
             {
-                if (_loginPassword != value)
+                if (_Username != value)
                 {
-                    _loginPassword = value;
-                    NotifyPropertyChanged(nameof(LoginPassword));
+                    _Username = value;
+                    NotifyPropertyChanged(nameof(Username));
+                }
+            }
+        }
+        public string Mail
+        {
+            get => _Mail;
+            set
+            {
+                if (_Mail != value)
+                {
+                    _Mail = value;
+                    NotifyPropertyChanged(nameof(Mail));
+                }
+            }
+        }
+        public string Password
+        {
+            get => _Password;
+            set
+            {
+                if (_Password != value)
+                {
+                    _Password = value;
+                    NotifyPropertyChanged(nameof(Password));
                 }
             }
         }
@@ -80,7 +106,6 @@ namespace Assets.ViewModels
                     }
 
                     NotifyPropertyChanged(nameof(SelectedUser));
-                    NotifyPropertyChanged(nameof(UserId));
                     NotifyPropertyChanged(nameof(UserName));
                     NotifyPropertyChanged(nameof(UserUsername));
                     NotifyPropertyChanged(nameof(UserMail));
@@ -89,18 +114,6 @@ namespace Assets.ViewModels
             }
         }
         // wrapper-properties for binding
-        public string UserId
-        {
-            get => SelectedUser?.Id ?? "";
-            set
-            {
-                if (SelectedUser != null && SelectedUser.Id != value)
-                {
-                    SelectedUser.Id = value;
-                    NotifyPropertyChanged(nameof(UserId));
-                }
-            }
-        }
         public string UserName
         {
             get => SelectedUser?.Name ?? "";
@@ -163,13 +176,13 @@ namespace Assets.ViewModels
             Users.Clear();
             // call service (service calls api)
             // username gets automatically updated: user input
-            var users = await _userService.GetUserByUsername(LoginUsername);
+            var users = await _userService.GetUserByUsername(Username);
             foreach (var user in users)
             {
                 Users.Add(user);
             }
             // Authenticate
-            if (Users[0].password == LoginPassword)
+            if (Users[0].password == Password)
             {
                 // set selectedUser
                 SelectedUser = Users[0];
@@ -185,19 +198,17 @@ namespace Assets.ViewModels
 
         // IN DIESER DATEI AUCH MÖGLICHKEIT ZUR REGISTRIERUNG BIETEN
         // safe user
-        public async void SaveUser()
+        public async Task UpdateUserAsync()
         {
-            if (SelectedUser != null)
-            {
-                await _userService.UpdateUserAsync(SelectedUser);
-            }
+            Debug.LogError($"Hi {SelectedUser.name}, aktuell werden noch keine Änderungen gespeichert.\nFolgende Änderungen sind vorgemerkt");
+            Debug.Log($"{_Name} {_Username} {_Mail} {_Password}");
+            //await _userService.UpdateUserAsync(SelectedUser);
         }
 
 
         // gets updates from model --> ViewModel can publish changes to UI --> UI gets updated
         private void SubscribeToUser(User user)
         {
-            user.OnIdChanged += OnUserIdChanged;
             user.OnNameChanged += OnUserNameChanged;
             user.OnUsernameChanged += OnUserUsernameChanged;
             user.OnMailChanged += OnUserMailChanged;
@@ -205,18 +216,11 @@ namespace Assets.ViewModels
         }
         private void UnsubscribeFromUser(User user)
         {
-            user.OnIdChanged -= OnUserIdChanged;
             user.OnNameChanged -= OnUserNameChanged;
             user.OnUsernameChanged -= OnUserUsernameChanged;
             user.OnMailChanged -= OnUserMailChanged;
             user.OnPasswordChanged -= OnUserPasswordChanged;
         }
-
-        private void OnUserIdChanged(string newId)
-        {
-            NotifyPropertyChanged(nameof(UserId));
-        }
-
         private void OnUserNameChanged(string newName)
         {
             NotifyPropertyChanged(nameof(UserName));

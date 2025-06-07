@@ -11,7 +11,7 @@ using UnityEditor.UIElements;
 
 // gets UIDocument-Component 
 [RequireComponent(typeof(UIDocument))]
-public class LoginView : MonoBehaviour
+public class AccountView : MonoBehaviour
 {
     // connection to viewmodel (View Model contains Logic)
     private UserViewModel _viewModel;
@@ -23,7 +23,9 @@ public class LoginView : MonoBehaviour
 
     // TextInputs
     [Header("UI Input Fields")]
+    public TMP_InputField NameInput;
     public TMP_InputField UserNameInput;
+    public TMP_InputField MailInput;
     public TMP_InputField PasswordInput;
 
     // automatic call: activate object
@@ -38,6 +40,10 @@ public class LoginView : MonoBehaviour
     {
         _viewModel = new UserViewModel();
 
+        // get current user from SessionData
+        var CurrentUser = SessionData.CurrentUser;
+        Debug.Log("Herzlich Willkommen, " + CurrentUser.Name + "! Hier kannst du deine persönlichen Daten überarbeiten");
+
         // connects ui-events
         SetupUIEventHandlers();
     }
@@ -46,9 +52,17 @@ public class LoginView : MonoBehaviour
     private void SetupUIEventHandlers()
     {
         // connects input (variables) with functions --> function gets called every time, when sth changes in inputfield in UI
+        if (NameInput != null)
+        {
+            NameInput.onValueChanged.AddListener(OnNameChanged);
+        }
         if (UserNameInput != null)
         {
             UserNameInput.onValueChanged.AddListener(OnUsernameChanged);
+        }
+        if (MailInput != null)
+        {
+            MailInput.onValueChanged.AddListener(OnMailChanged);
         }
         if (PasswordInput != null)
         {
@@ -56,11 +70,25 @@ public class LoginView : MonoBehaviour
         }
     }
     // functions: change variables in viewModel if sth typed in input (new value of textinput == var value in ViewModel)
+    private void OnNameChanged(string value)
+    {
+        if (_viewModel != null)
+        {
+            _viewModel.Name = value;
+        }
+    }
     private void OnUsernameChanged(string value)
     {
         if (_viewModel != null)
         {
             _viewModel.Username = value;
+        }
+    }
+    private void OnMailChanged(string value)
+    {
+        if (_viewModel != null)
+        {
+            _viewModel.Mail = value;
         }
     }
     private void OnPasswordChanged(string value)
@@ -72,43 +100,21 @@ public class LoginView : MonoBehaviour
     }
 
     // functionality of login button (UI)
-    public void OnLoginPressed()
+    public void OnBackPressed()
     {
-        // login for user
-        StartCoroutine(Login());
+        // back to login
+        SceneManager.LoadScene("LoginScene");
     }
 
     // functionality of account button
-    public void OnAccountPressed()
+    public void OnUpdatePressed()
     {
-        StartCoroutine(Account());
-    }
-    // account
-    private IEnumerator Account()
-    {
-        // load user
-        Task loadTask = _viewModel.LoadUserByUsernameAsync();
-        // WaitUntil ~ async/await: wait until task ist completed)
-        yield return new WaitUntil(() => loadTask.IsCompleted);
-
-        // only reached if login is successfull (logic in view model)
-        Debug.Log($"Login erfolgreich für User: {_viewModel.SelectedUser.name}");
-        // change scene
-        SceneManager.LoadScene("AccountScene");
+        StartCoroutine(UpdateUser());
     }
 
-
-    // login for user
-    private IEnumerator Login()
+    private IEnumerator UpdateUser()
     {
-        // load user
-        Task loadTask = _viewModel.LoadUserByUsernameAsync();
-        // WaitUntil ~ async/await: wait until task ist completed)
+        Task loadTask = _viewModel.UpdateUserAsync();
         yield return new WaitUntil(() => loadTask.IsCompleted);
-
-        // only reached if login is successfull (logic in view model)
-        Debug.Log($"Login erfolgreich für User: {_viewModel.SelectedUser.name}");
-        // change scene
-        SceneManager.LoadScene("BauernhofScene");
     }
 }

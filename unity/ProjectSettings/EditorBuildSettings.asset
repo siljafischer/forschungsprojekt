@@ -12,8 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/LoginScene.unity
     guid: f61f3dbc71be2f346b0b7ecfe6bde352
   - enabled: 1
-    path: Assets/Scenes/first_steps.unity
+    path: Assets/Scenes/BauernhofScene.unity
     guid: 5b6c3cb757cc8374e92abfc95f3fa2ae
+  - enabled: 1
+    path: Assets/Scenes/AccountScene.unity
+    guid: e42fd7e95cdcfb6468a05fd67c7a2f4e
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bd2011476ce4b164e93314da4675d592, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
