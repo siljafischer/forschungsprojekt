@@ -15,7 +15,7 @@ namespace Assets.ViewModels
     public class UserViewModel : INotifyBindablePropertyChanged
     {
         // ENTFERNEN, WENN LOGINFORMULAR EINGEFÜGT
-        public string uname = "silly";
+        public string uname = "juli";
 
 
 
