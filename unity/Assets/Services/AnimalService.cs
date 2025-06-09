@@ -10,20 +10,8 @@ using UnityEngine;
 
 namespace Assets.Services
 {
-    public class AnimalService
+    public class AnimalService : MainService
     {
-        private readonly HttpClient _httpClient;
-
-        // Base URL
-        public AnimalService()
-        {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("https://localhost:7167")
-                //BaseAddress = new Uri("http://192.168.178.X:7167")
-
-            };
-        }
 
         // wrapper class --> json to usable objects
         [Serializable]
