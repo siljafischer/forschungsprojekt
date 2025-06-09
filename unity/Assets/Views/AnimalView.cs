@@ -4,6 +4,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;
 using Assets.Models;
+using UnityEngine.SceneManagement;
 
 // gets UIDocument-Component 
 [RequireComponent(typeof(UIDocument))]
@@ -80,5 +81,12 @@ public class AnimalView : MonoBehaviour
         // wait 3 seconds and move --> BEHAVIOUR INTO VIEWMODEL!!!
         yield return new WaitForSeconds(3f);
         _viewModel.AnimalWalks(_animalInstance);
+    }
+
+    // back button
+    public void OnBackPressed()
+    {
+        // back to login
+        SceneManager.LoadScene("MenuScene");
     }
 }

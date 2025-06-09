@@ -21,31 +21,17 @@ namespace Assets.ViewModels
         // list of all users: observable collection can identify changes automatically
         public ObservableCollection<User> Users { get; private set; }
         // selected user --> binded to UI
-        [SerializeField] public User SelectedUser { get; private set; }
+        [SerializeField] public User _selectedUser { get; private set; }
 
         // INotifyBindablePropertyChanged implementation
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        // variables as result of login
-        private string _Name = "";
+        // variables for login
         private string _Username = "";
-        private string _Mail = "";
         private string _Password = "";
 
 
         // Properties for login and account --> UI can use this Variables: updated with changes in UI
-        public string Name
-        {
-            get => _Name;
-            set
-            {
-                if (_Name != value)
-                {
-                    _Name = value;
-                    NotifyPropertyChanged(nameof(Name));
-                }
-            }
-        }
         public string Username
         {
             get => _Username;
@@ -55,18 +41,6 @@ namespace Assets.ViewModels
                 {
                     _Username = value;
                     NotifyPropertyChanged(nameof(Username));
-                }
-            }
-        }
-        public string Mail
-        {
-            get => _Mail;
-            set
-            {
-                if (_Mail != value)
-                {
-                    _Mail = value;
-                    NotifyPropertyChanged(nameof(Mail));
                 }
             }
         }
@@ -84,25 +58,25 @@ namespace Assets.ViewModels
         }
 
         // selectedUser == current user --> automatic updates if user changed in UI <-> Model
-        public User SelectedUSer
+        public User SelectedUser
         {
-            get => SelectedUser;
+            get => _selectedUser;
             set
             {
-                if (SelectedUser != value)
+                if (_selectedUser != value)
                 {
                     // unsubscribe from user
-                    if (SelectedUser != null)
+                    if (_selectedUser != null)
                     {
-                        UnsubscribeFromUser(SelectedUser);
+                        UnsubscribeFromUser(_selectedUser);
                     }
 
-                    SelectedUser = value;
+                    _selectedUser = value;
 
                     // subscribe to user
-                    if (SelectedUser != null)
+                    if (_selectedUser != null)
                     {
-                        SubscribeToUser(SelectedUser);
+                        SubscribeToUser(_selectedUser);
                     }
 
                     NotifyPropertyChanged(nameof(SelectedUser));
@@ -113,7 +87,7 @@ namespace Assets.ViewModels
                 }
             }
         }
-        // wrapper-properties for binding
+        // wrapper-properties for binding --> direct to SelectedUser
         public string UserName
         {
             get => SelectedUser?.Name ?? "";
@@ -167,6 +141,7 @@ namespace Assets.ViewModels
         {
             _userService = new UserService();
             Users = new ObservableCollection<User>();
+            SelectedUser = SessionData.CurrentUser;
         }
 
         // load specific users --> C# async: load but dont block
@@ -174,9 +149,14 @@ namespace Assets.ViewModels
         {
 
             Users.Clear();
+
             // call service (service calls api)
-            // username gets automatically updated: user input
-            var users = await _userService.GetUserByUsername(Username);
+            // username gets automatically updated: user input OR use CurrentUser
+            var uname = string.IsNullOrWhiteSpace(Username)
+                ? SessionData.CurrentUser?.Username
+                : Username;
+
+            var users = await _userService.GetUserByUsername(uname);
             foreach (var user in users)
             {
                 Users.Add(user);
@@ -197,13 +177,28 @@ namespace Assets.ViewModels
 
 
         // IN DIESER DATEI AUCH MÖGLICHKEIT ZUR REGISTRIERUNG BIETEN
-        // safe user
+        // update user
         public async Task UpdateUserAsync()
         {
-            Debug.LogError($"Hi {SelectedUser.name}, aktuell werden noch keine Änderungen gespeichert.\nFolgende Änderungen sind vorgemerkt");
-            Debug.Log($"{_Name} {_Username} {_Mail} {_Password}");
-            //await _userService.UpdateUserAsync(SelectedUser);
+            // update user
+            await _userService.UpdateUserAsync(SelectedUser);
+            // set updated user as current user for all other scenes
+            SyncToSessionUser();
         }
+        private void SyncToSessionUser()
+        {
+            var target = SessionData.CurrentUser;
+            var source = SelectedUser;
+
+            if (target != null && source != null)
+            {
+                target.Name = source.Name;
+                target.Username = source.Username;
+                target.Mail = source.Mail;
+                target.Password = source.Password;
+            }
+        }
+
 
 
         // gets updates from model --> ViewModel can publish changes to UI --> UI gets updated

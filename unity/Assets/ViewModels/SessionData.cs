@@ -10,5 +10,11 @@ namespace Assets.ViewModels
     public static class SessionData
     {
         public static User CurrentUser { get; set; }
+
+        // logout
+        public static void Clear()
+        {
+            CurrentUser = null;
+        }
     }
 }

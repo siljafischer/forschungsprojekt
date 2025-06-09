@@ -77,27 +77,6 @@ public class LoginView : MonoBehaviour
         // login for user
         StartCoroutine(Login());
     }
-
-    // functionality of account button
-    public void OnAccountPressed()
-    {
-        StartCoroutine(Account());
-    }
-    // account
-    private IEnumerator Account()
-    {
-        // load user
-        Task loadTask = _viewModel.LoadUserByUsernameAsync();
-        // WaitUntil ~ async/await: wait until task ist completed)
-        yield return new WaitUntil(() => loadTask.IsCompleted);
-
-        // only reached if login is successfull (logic in view model)
-        Debug.Log($"Login erfolgreich für User: {_viewModel.SelectedUser.name}");
-        // change scene
-        SceneManager.LoadScene("AccountScene");
-    }
-
-
     // login for user
     private IEnumerator Login()
     {
@@ -109,6 +88,6 @@ public class LoginView : MonoBehaviour
         // only reached if login is successfull (logic in view model)
         Debug.Log($"Login erfolgreich für User: {_viewModel.SelectedUser.name}");
         // change scene
-        SceneManager.LoadScene("BauernhofScene");
+        SceneManager.LoadScene("MenuScene");
     }
 }
