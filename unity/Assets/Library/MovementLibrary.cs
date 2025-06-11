@@ -141,10 +141,46 @@ namespace Assets.Library
             mover.SetInput(Vector2.zero, mover.transform.position, false, false);
 
         }
+        public static IEnumerator Turn90Right(CreatureMover mover)
+        {
+            float spinDuration = 0.25f;
+            float spinSpeed = 360f;
+            float spinElapsed = 0f;
+
+            // turn 90 left
+            while (spinElapsed < spinDuration)
+            {
+                float rotationThisFrame = spinSpeed * Time.deltaTime;
+                mover.transform.Rotate(0, rotationThisFrame, 0);
+                spinElapsed += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        public static IEnumerator Turn90Left(CreatureMover mover)
+        {
+            float spinDuration = 0.25f;
+            float spinSpeed = 360f;
+            float spinElapsed = 0f;
+
+            // turn 90 left
+            while (spinElapsed < spinDuration)
+            {
+                float rotationThisFrame = spinSpeed * Time.deltaTime;
+                mover.transform.Rotate(0, -rotationThisFrame, 0);
+                spinElapsed += Time.deltaTime;
+                yield return null;
+            }
+        }
 
         // run away --> NOT READY
         public static IEnumerator RunAway(CreatureMover mover)
         {
+
+            // Stoppen nach der Drehung
+            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
+            yield return new WaitForSeconds(0.1f);
+
             // variables for camera and position
             float elapsed = 0f;
             Vector3 camForward = Camera.main.transform.forward;
