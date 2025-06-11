@@ -37,7 +37,7 @@ namespace Assets.ViewModels
             // select animal --> MANUALLY --> CHANGE LATER!!!
             if (Animals.Count > 0)
             {
-                SelectedAnimal = Animals[2];
+                SelectedAnimal = Animals[6];
             }
         }
 
@@ -47,15 +47,16 @@ namespace Assets.ViewModels
             if (instance != null)
             {
                 // get movement-component
-                var mover = instance.GetComponent<CreatureMover>();
+                var mover = instance.AddComponent<CreatureMoverElk>();
                 // bridge: enables coroutines (from viewmodel to view: view is unity specific --> no async-metods but coroutines)
                 var mb = instance.GetComponent<MonoBehaviourBridge>();
+                Animation anim = instance.GetComponent<Animation>();
 
                 if (mover != null && mb != null)
                 {
                     // move: run away
                     //mb.StartCoroutine(MovementLibrary.WalkNormal(mover));
-                    mb.StartCoroutine(MovementLibrary.RunAway(mover));
+                    mb.StartCoroutine(MovementLibraryElk.Walk(mover, anim));
                     // here second coroutine: will not work: coroutines dont bloxk and move over
                 }
             }
