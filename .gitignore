@@ -27,3 +27,10 @@
 /backend/backend/.vs/ProjectEvaluation
 /unity/Assets/ithappy/
 !*.meta
+/unity/Assets/Scenes/AccountScene.unity.meta
+/unity/Assets/Scenes/BauernhofScene.unity.meta
+/unity/Assets/Scenes/MenuScene.unity.meta
+/unity/Assets/ViewModels/SessionData.cs.meta
+/unity/Assets/Views/AccountView.cs.meta
+/unity/Assets/Views/LoginView.cs.meta
+/unity/Assets/Views/MenuView.cs.meta
