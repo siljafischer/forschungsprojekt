@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Assets.Library;
+using GLTFast.Schema;
 
 namespace Assets.Library
 {
@@ -8,30 +9,21 @@ namespace Assets.Library
     public static class MovementLibraryElk
     {
         // walk
-        public static IEnumerator Walk(CreatureMoverElk mover, Animation anim, float duration = 5f)
+        public static IEnumerator Walk(Animator animator, Transform elkTransform, float duration, float speed)
         {
-            // timer
             float elapsed = 0f;
 
-            // move while timer lasts
+            // start animation
+            animator.SetBool("isWalking", true);
             while (elapsed < duration)
             {
-                mover.Eat(anim);
-                elapsed += Time.deltaTime;
-            }
-            // reset timer and wait for 1 second
-            elapsed = 0f;
-            yield return new WaitForSeconds(1f);
-
-            // turn left
-            mover.WalkLeft(anim);
-            // move while timer lasts
-            while (elapsed < duration)
-            {
-                mover.Walk(anim);
+                // slide forward
+                elkTransform.position += elkTransform.forward * speed * Time.deltaTime;
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+            // stop walking
+            animator.SetBool("isWalking", false);
         }
     }
 }

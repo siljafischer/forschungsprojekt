@@ -71,6 +71,7 @@ public class AnimalView : MonoBehaviour
         }
         _animalInstance = Instantiate(prefab);
 
+
         // Position: 3 meters in front of camera
         Camera cam = Camera.main;
         _animalInstance.transform.position = cam.transform.position + cam.transform.forward * 3f + cam.transform.up * -1f;
