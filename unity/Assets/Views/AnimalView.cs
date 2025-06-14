@@ -80,7 +80,7 @@ public class AnimalView : MonoBehaviour
         _animalInstance.AddComponent<MonoBehaviourBridge>();
 
         // wait 3 seconds and move --> BEHAVIOUR INTO VIEWMODEL!!!
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         _viewModel.AnimalWalks(_animalInstance);
     }
 

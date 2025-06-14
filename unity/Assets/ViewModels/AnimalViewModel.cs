@@ -46,12 +46,10 @@ namespace Assets.ViewModels
         {
             if (instance != null)
             {
-                // get movement-component
-                var mover = instance.AddComponent<CreatureMoverElk>();
                 // bridge: enables coroutines (from viewmodel to view: view is unity specific --> no async-metods but coroutines)
                 var mb = instance.GetComponent<MonoBehaviourBridge>();
-                Animator animator = instance.GetComponent<Animator>();
-                // add controller for Animation
+
+                // add animator ans controller for Animation
                 /*
                  *  for new movement: add movement from .fbx to Controller
                  *  left: add newParam is<Movement>
@@ -59,15 +57,15 @@ namespace Assets.ViewModels
                  *  Edit Transition: add is<Movement>
                  *  --> copy everything else from walk
                  */
+                Animator animator = instance.AddComponent<Animator>();
                 animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimalController");
                 animator.applyRootMotion = false;
 
-                if (mover != null && mb != null)
+                if (mb != null)
                 {
-                    // move: run away
-                    //mb.StartCoroutine(MovementLibrary.WalkNormal(mover));
-                    mb.StartCoroutine(MovementLibraryElk.Walk(animator, instance.transform, 5f, 2f));
-                    // here second coroutine: will not work: coroutines dont bloxk and move over
+                    // movements
+                    // mb.StartCoroutine(MovementLibraryElk.Chill(animator, 6f));
+                    mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
                 }
             }
         }
