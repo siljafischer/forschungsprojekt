@@ -89,7 +89,7 @@ namespace Assets.Services
             try
             {
                 // GET
-                var response = await _httpClient.GetAsync($"/User/allByUsername/{username}");
+                var response = await _httpClient.GetAsync($"User/allByUsername/{username}");
 
                 // check if response is correct
                 if (response.IsSuccessStatusCode)
@@ -113,6 +113,7 @@ namespace Assets.Services
                 return new List<User>();
             }
         }
+
 
 
 
