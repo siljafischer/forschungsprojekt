@@ -9,7 +9,6 @@ using Assets.Library;
 using UnityEngine.UIElements;
 using System;
 using System.Collections.Generic;
-using static UnityEditor.Profiling.HierarchyFrameDataView;
 
 namespace Assets.ViewModels
 {

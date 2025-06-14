@@ -7,8 +7,6 @@ using UnityEngine.UIElements;
 using Assets.Models;
 using TMPro;
 using Unity.Properties;
-using UnityEditor.UIElements;
-using static UnityEditor.Profiling.HierarchyFrameDataView;
 using System;
 
 // gets UIDocument-Component 

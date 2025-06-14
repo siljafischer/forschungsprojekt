@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 using Assets.Models;
 using TMPro;
 using Unity.Properties;
-using UnityEditor.UIElements;
 
 // gets UIDocument-Component 
 [RequireComponent(typeof(UIDocument))]
