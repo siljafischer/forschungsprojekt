@@ -1,205 +1,95 @@
 ﻿using System.Collections;
 using UnityEngine;
 using Assets.Library;
+using GLTFast.Schema;
 
 namespace Assets.Library
 {
-    // collection of different movements (ONLY movements) --> calls CreatureMover: holds all implementations
+    // collection of different movements e.g. Normal Behaviour or RunAway --> CreatureMover: holds all implementations eg Walk, Eat, run --> not necessary (weil gutes animiertes Modell)
     public static class MovementLibrary
     {
-        // walk
-        public static IEnumerator Walk(CreatureMover mover, float speed = 0.1f, float duration = 2f)
+        // timer
+        public static IEnumerator Timer(float duration)
         {
-            // timer
             float elapsed = 0f;
-
-            // moves forward (Z)
-            Vector2 moveAxis = new Vector2(0f, 1f);
-            // gets direction of camera
-            Vector3 camForward = Camera.main.transform.forward;
-            // only moves horizontal
-            camForward.y = 0f;
-            camForward.Normalize();
-
-            // move while timer lasts
             while (elapsed < duration)
             {
-                // destination: mover.transform.position + camForward
-                // first false: run
-                // second false: jump
-                mover.SetInput(moveAxis, mover.transform.position + camForward, false, false);
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            // reset for remain standing
-            //mover.SetInput(Vector2.zero, Vector3.zero, false, false);
         }
 
-        // jump --> NOT READY
-        public static IEnumerator Jump(CreatureMover mover, float speed = 0.1f, float duration = 1f)
+        // MOVEMENTS
+        // lay
+        public static IEnumerator Chill(Animator animator, float duration)
         {
-            yield return null;
+            // start animation --> lay down and wait
+            animator.SetBool("isLying", true);
+            yield return Timer(duration);
+            // stand up and stop
+            animator.SetBool("isLying", false);
         }
-
-
-        // run
-        public static IEnumerator Run(CreatureMover mover, float speed = 0.5f, float duration = 2f)
+        public static IEnumerator MoveUnseen(Animator animator, Transform Transform, float duration, float speed)
         {
             float elapsed = 0f;
 
-            Vector2 moveAxis = new Vector2(0f, 1f);
-            Vector3 camForward = Camera.main.transform.forward;
-            camForward.y = 0f;
-            camForward.Normalize();
+            animator.applyRootMotion = false;
+            // eating
+            animator.SetBool("isEating", true);
+            yield return Timer(duration-1);
+            animator.SetBool("isEating", false);
 
+            // turn right
+            animator.SetBool("isRight", true);
+            yield return Timer(duration);
+            animator.SetBool("isRight", false);
+            // walk right
+            Transform.rotation = Quaternion.Euler(0, 90f, 0);
+            animator.SetBool("isWalking", true);
+            while (elapsed < duration-2)
+            {
+                Transform.position += Transform.forward * speed * Time.deltaTime;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            animator.SetBool("isWalking", false);
+
+            // turn left
+            animator.SetBool("isLeft", true);
+            yield return Timer(duration-2);
+            animator.SetBool("isLeft", false);
+            Transform.rotation = Quaternion.Euler(0, 0f, 0);
+            // walk left
+            animator.SetBool("isWalking", true);
             while (elapsed < duration)
             {
-                // first true: run
-                mover.SetInput(moveAxis, mover.transform.position + camForward, true, false);
+                Transform.position += Transform.forward * speed * Time.deltaTime;
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            mover.SetInput(Vector2.zero, Vector3.zero, false, false);
-        }
+            animator.SetBool("isWalking", false);
 
-
-        // walk normal
-        public static IEnumerator WalkNormal(CreatureMover mover)
-        {
-            // variables for camera and position
-            float elapsed = 0f;
-            Vector3 camForward = Camera.main.transform.forward;
-            camForward.y = 0f;
-            camForward.Normalize();
-
-            // walk backward
-            Vector2 moveBackward = new Vector2(0f, 1f);
-            while (elapsed < 3f)
-            {
-                mover.SetInput(moveBackward, mover.transform.position + camForward, false, false);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            // stand 1 sec
-            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
-            yield return new WaitForSeconds(1f);
-
-            // turn and walk right
-            elapsed = 0f;
-            Vector2 moveRight = new Vector2(1f, 0f);
-            while (elapsed < 2f)
-            {
-                mover.SetInput(moveRight, mover.transform.position + camForward, false, false);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            // stand 1 sec
-            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
-            yield return new WaitForSeconds(1f);
-
-            // turn and walk left
-            elapsed = 0f;
-            Vector2 moveLeft = new Vector2(-1f, 0f);
-            while (elapsed < 2f)
-            {
-                mover.SetInput(moveLeft, mover.transform.position + camForward, false, false);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            // stand 1 sec
-            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
-            yield return new WaitForSeconds(1f);
-
-            // turn and walk forward
-            elapsed = 0f;
-            Vector2 moveForward = new Vector2(0f, -1f);
-            while (elapsed < 1f)
-            {
-                mover.SetInput(moveForward, mover.transform.position + camForward, false, false);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            // stand 1 sec
-            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
-            yield return new WaitForSeconds(1f);
-
-            // turn and walk RightBackward
-            elapsed = 0f;
-            Vector2 moveRightBackward = new Vector2(1f, 1f);
-            while (elapsed < 1f)
-            {
-                mover.SetInput(moveRightBackward, mover.transform.position + camForward, false, false);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            // end
-            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
+            // chill
+            yield return Chill(animator, duration);
 
         }
-
-        // run away --> NOT READY
-        public static IEnumerator RunAway(CreatureMover mover)
+        public static IEnumerator RunAway(Animator animator, Transform Transform, float duration, float speed)
         {
-            // variables for camera and position
             float elapsed = 0f;
-            Vector3 camForward = Camera.main.transform.forward;
-            camForward.y = 0f;
-            camForward.Normalize();
 
-            // turn and walk RightBackward
-            elapsed = 0f;
-            Vector2 moveRightBackward = new Vector2(1f, 1f);
-            while (elapsed < 3f)
+
+
+            // start animation
+            animator.SetBool("isWalking", true);
+            while (elapsed < duration)
             {
-                mover.SetInput(moveRightBackward, mover.transform.position + camForward, true, false);
+                // slide forward
+                Transform.position += Transform.forward * speed * Time.deltaTime;
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            // stand 0.1 sec
-            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
-            yield return new WaitForSeconds(0.1f);
-
-            // turn and walk left
-            elapsed = 0f;
-            Vector2 moveLeft = new Vector2(-1f, 0f);
-            while (elapsed < 4f)
-            {
-                mover.SetInput(moveLeft, mover.transform.position + camForward, true, false);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            // stand 0.1 sec
-            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
-            yield return new WaitForSeconds(0.1f);
-
-            // turn and walk RightBackward
-            elapsed = 0f;
-            while (elapsed < 5f)
-            {
-                mover.SetInput(moveRightBackward, mover.transform.position + camForward, true, false);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            // stand 1 sec
-            mover.SetInput(Vector2.zero, mover.transform.position, false, false);
-
-
-            elapsed = 0f;
-            Vector2 moveRight = new Vector2(1f, 0f);
-            while (elapsed < 3f)
-            {
-                mover.SetInput(moveRight, mover.transform.position + camForward, true, false);
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            //end
-            mover.SetInput(Vector2.zero, Vector3.zero, false, false);
+            // stop walking
+            animator.SetBool("isWalking", false);
         }
     }
 }

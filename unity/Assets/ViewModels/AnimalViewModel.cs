@@ -37,7 +37,7 @@ namespace Assets.ViewModels
             // select animal --> MANUALLY --> CHANGE LATER!!!
             if (Animals.Count > 0)
             {
-                SelectedAnimal = Animals[2];
+                SelectedAnimal = Animals[6];
             }
         }
 
@@ -46,17 +46,26 @@ namespace Assets.ViewModels
         {
             if (instance != null)
             {
-                // get movement-component
-                var mover = instance.GetComponent<CreatureMover>();
                 // bridge: enables coroutines (from viewmodel to view: view is unity specific --> no async-metods but coroutines)
                 var mb = instance.GetComponent<MonoBehaviourBridge>();
 
-                if (mover != null && mb != null)
+                // add animator ans controller for Animation
+                /*
+                 *  for new movement: add movement from .fbx to Controller
+                 *  left: add newParam is<Movement>
+                 *  create new state, add transitions to idle 
+                 *  Edit Transition: add is<Movement>
+                 *  --> copy everything else from walk
+                 */
+                Animator animator = instance.AddComponent<Animator>();
+                animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimalController");
+                animator.applyRootMotion = false;
+
+                if (mb != null)
                 {
-                    // move: run away
-                    //mb.StartCoroutine(MovementLibrary.WalkNormal(mover));
-                    mb.StartCoroutine(MovementLibrary.RunAway(mover));
-                    // here second coroutine: will not work: coroutines dont bloxk and move over
+                    // movements
+                    // mb.StartCoroutine(MovementLibraryElk.Chill(animator, 6f));
+                    mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
                 }
             }
         }

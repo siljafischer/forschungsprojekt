@@ -11,8 +11,8 @@
     </activity>
     <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="false" />
     <meta-data android:name="com.oculus.ossplash.background" android:value="black" />
-    <meta-data android:name="com.oculus.telemetry.project_guid" android:value="e7a21c8c-cd9a-4c75-8a07-b4ab637322d6" />
-    <meta-data android:name="com.oculus.supportedDevices" android:value="quest2|questpro|quest3|quest3s" tools:replace="android:value" />
+    <meta-data android:name="com.oculus.telemetry.project_guid" android:value="e04b6ebd-ed7d-4cd6-b707-649282812a49" />
+    <meta-data android:name="com.oculus.supportedDevices" android:value="quest|quest2|questpro|quest3|quest3s" tools:replace="android:value" />
   </application>
   <uses-feature android:name="android.hardware.vr.headtracking" android:version="1" android:required="true" />
 </manifest>

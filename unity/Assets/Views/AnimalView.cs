@@ -66,20 +66,21 @@ public class AnimalView : MonoBehaviour
         GameObject prefab = Resources.Load<GameObject>(selectedAnimal.animationlink);
         if (prefab == null)
         {
-            Debug.LogError($"Konnte Prefab nicht finden unter: Resources/{selectedAnimal.animationlink}.prefab");
+            Debug.LogError($"Konnte Prefab nicht finden unter: Resources/{selectedAnimal.animationlink}");
             yield break;
         }
         _animalInstance = Instantiate(prefab);
+
 
         // Position: 3 meters in front of camera
         Camera cam = Camera.main;
         _animalInstance.transform.position = cam.transform.position + cam.transform.forward * 3f + cam.transform.up * -1f;
 
-        // Script of animal --> VIEWMODEL???
+        // Script of animal
         _animalInstance.AddComponent<MonoBehaviourBridge>();
 
         // wait 3 seconds and move --> BEHAVIOUR INTO VIEWMODEL!!!
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         _viewModel.AnimalWalks(_animalInstance);
     }
 
