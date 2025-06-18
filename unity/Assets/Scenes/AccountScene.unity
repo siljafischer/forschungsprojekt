@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1912278062}
+      - m_Target: {fileID: 1912278063}
         m_TargetAssemblyTypeName: AccountView, Assembly-CSharp
         m_MethodName: OnUpdatePressed
         m_Mode: 1
@@ -3186,7 +3186,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1912278062}
+      - m_Target: {fileID: 1912278063}
         m_TargetAssemblyTypeName: AccountView, Assembly-CSharp
         m_MethodName: OnBackPressed
         m_Mode: 1
@@ -3429,6 +3429,7 @@ GameObject:
   - component: {fileID: 1912278057}
   - component: {fileID: 1912278056}
   - component: {fileID: 1912278062}
+  - component: {fileID: 1912278063}
   m_Layer: 3
   m_Name: Account
   m_TagString: Untagged
@@ -3582,6 +3583,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51f5146afc4b58947896038fc1a9a69d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1912278063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912278054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce29f7d3f0091a344baf06f0d5190e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _uiDocument: {fileID: 0}

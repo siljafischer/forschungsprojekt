@@ -21,6 +21,7 @@ public class AccountView : MonoBehaviour
     private VisualElement _root;
     // var for current user
     public User CurrentUser;
+    public string BackupOldPassword;
 
     // TextInputs
     [Header("UI Input Fields")]
@@ -60,7 +61,8 @@ public class AccountView : MonoBehaviour
         if (MailInput != null)
             MailInput.text = CurrentUser.Mail;
         if (PasswordOld != null)
-            PasswordOld.text = "Passwort ändern: " + CurrentUser.Password;
+            BackupOldPassword = CurrentUser.Password;
+            PasswordOld.text = "Passwort durch Eingabe ändern: " + CurrentUser.Password;
     }
 
     /*
@@ -127,7 +129,7 @@ public class AccountView : MonoBehaviour
             case nameof(UserViewModel.UserPassword):
                 if (PasswordOld != null && PasswordOld.text != _viewModel.UserPassword)
                 {
-                    PasswordOld.text = "Passwort ändern: " + _viewModel.UserPassword;
+                    PasswordOld.text = "Änderung: " + _viewModel.UserPassword;
                 }
                 break;
         }
@@ -151,6 +153,8 @@ public class AccountView : MonoBehaviour
     // functionality of back button
     public void OnBackPressed()
     {
+        // for unsaved display: save "old" password
+        _viewModel.UserPassword = BackupOldPassword;
         // back to menu
         SceneManager.LoadScene("MenuScene");
     }
@@ -159,6 +163,8 @@ public class AccountView : MonoBehaviour
     public void OnUpdatePressed()
     {
         StartCoroutine(UpdateUser());
+        // set new saved (!) password as backup password
+        BackupOldPassword = _viewModel.UserPassword;
     }
 
     private IEnumerator UpdateUser()
