@@ -14,7 +14,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 0
+    removeConstantScaleCurves: 1
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -35,14 +35,14 @@ ModelImporter:
       takeName: Stand_Eating_01
       internalID: 3288084797560324724
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 300
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
-      cycleOffset: 2
+      cycleOffset: 1
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0

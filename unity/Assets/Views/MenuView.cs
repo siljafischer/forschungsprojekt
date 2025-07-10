@@ -27,7 +27,7 @@ public class MenuView : MonoBehaviour
     }
     public void OnDiaryPressed()
     {
-        Debug.Log("Dieser Bereich steht aktuell noch nicht zur Verfügung");
+        SceneManager.LoadScene("DiaryScene");
     }
     public void OnLogoutPressed()
     {

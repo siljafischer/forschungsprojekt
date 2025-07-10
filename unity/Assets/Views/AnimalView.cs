@@ -17,6 +17,7 @@ public class AnimalView : MonoBehaviour
     // root of UI --> acceess UI (e.g. change text, use buttons)
     private VisualElement _root;
 
+
     // automatic call: activate object (e.g. gamestart)
     private void Start()
     {

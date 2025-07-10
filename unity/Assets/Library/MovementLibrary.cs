@@ -44,7 +44,7 @@ namespace Assets.Library
             yield return Timer(duration);
             animator.SetBool("isRight", false);
             // walk right
-            Transform.rotation = Quaternion.Euler(0, 90f, 0);
+            //Transform.rotation = Quaternion.Euler(0, 90f, 0);
             animator.SetBool("isWalking", true);
             while (elapsed < duration-2)
             {
