@@ -33,6 +33,22 @@ namespace Assets.ViewModels
             _selectedUser = SessionData.CurrentUser;
         }
 
+        // load only diary
+        public async Task LoadDiaryAsync()
+        {
+            // load diary
+            Diaries.Clear();
+            var diaries = await _diaryService.GetByUser(_selectedUser.Id);
+            foreach (var diary in diaries)
+            {
+                Diaries.Add(diary);
+            }
+            if (Diaries.Count > 0)
+            {
+                SelectedDiary = Diaries[0];
+            }
+        }
+
         // load all diary --> C# async: load but dont block
         public async Task LoadDiaryAndEntriesAsync()
         {
@@ -68,6 +84,10 @@ namespace Assets.ViewModels
             }
         }
 
-        // HIER FUNKTION, DIE ZSMGEHÖRIGEN EINTRAG UND VERBINDUNG ANZEIGT
+        // load related animals --> C# async: load but dont block
+        public async Task LoadRelatedAnimalsAsync()
+        {
+            Debug.Log("Details zu Tieren können derzeit noch nciht angezeigt werden. Wir bitten um Verständnis");
+        }
     }
 }

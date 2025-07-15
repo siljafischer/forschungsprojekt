@@ -26,7 +26,26 @@ public class DiaryentryView : MonoBehaviour
         Debug.Log(CurrentUser.Name + ", schau dir an, welche Tiere du schon fotografiert hast!");
 
         // load animals async (Coroutine ~ async/await: wait but dont block game)
-        //StartCoroutine(LoadAndDisplayAnimals());
+        StartCoroutine(LoadAndDisplayEntries());
+    }
+
+    private IEnumerator LoadAndDisplayEntries()
+    {
+        // load connections and entries and wait until loaded
+        Task loadTask = _viewModel.LoadDiaryAndEntriesAsync();
+        // called by Coroutine --> WaitUntil ~ async/await: wait until task ist completed)
+        yield return new WaitUntil(() => loadTask.IsCompleted);
+
+        if (_viewModel.Diaryentries == null || _viewModel.Diaryentries.Count == 0)
+        {
+            Debug.LogWarning("So wie es aussieht, hast du noch keine Tiere fotografiert. Hier ein Beispieleintrag");
+            yield break;
+        }
+
+        // load related animals
+        Task loadTaskAnimals = _viewModel.LoadRelatedAnimalsAsync();
+        // called by Coroutine --> WaitUntil ~ async/await: wait until task ist completed)
+        yield return new WaitUntil(() => loadTaskAnimals.IsCompleted);
     }
 
     // back button
