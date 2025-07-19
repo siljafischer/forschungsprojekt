@@ -25,71 +25,75 @@ namespace Assets.Library
         {
             // start animation --> lay down and wait
             animator.SetBool("isLying", true);
-            yield return Timer(duration);
+            yield return Timer(duration+5);
             // stand up and stop
             animator.SetBool("isLying", false);
         }
         public static IEnumerator MoveUnseen(Animator animator, Transform Transform, float duration, float speed)
+        {
+            for (int i = 0; i <= 2; i++)
+            {
+                float elapsed = 0f;
+
+                animator.applyRootMotion = false;
+                // eating
+                animator.SetBool("isEating", true);
+                yield return Timer(duration - 1);
+                animator.SetBool("isEating", false);
+
+                // turn right
+                animator.SetBool("isRight", true);
+                yield return Timer(duration);
+                animator.SetBool("isRight", false);
+                // walk right
+                Transform.rotation = Quaternion.Euler(0, 90f, 0);
+                animator.SetBool("isWalking", true);
+                while (elapsed < duration - 2)
+                {
+                    Transform.position += Transform.forward * speed * Time.deltaTime;
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+                animator.SetBool("isWalking", false);
+
+                // turn left
+                animator.SetBool("isLeft", true);
+                yield return Timer(duration - 2);
+                animator.SetBool("isLeft", false);
+                Transform.rotation = Quaternion.Euler(0, 0f, 0);
+                animator.SetBool("isWalking", true);
+                while (elapsed < duration)
+                {
+                    Transform.position += Transform.forward * speed * Time.deltaTime;
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+                animator.SetBool("isWalking", false);
+
+                // chill
+                yield return Chill(animator, duration);
+            }
+
+        }
+
+        public static IEnumerator RunAway(Animator animator, Transform Transform, float duration, float speed)
         {
             float elapsed = 0f;
 
             animator.applyRootMotion = false;
             // eating
             animator.SetBool("isEating", true);
-            yield return Timer(duration-1);
+            yield return Timer(duration - 1);
             animator.SetBool("isEating", false);
 
-            // turn right
-            animator.SetBool("isRight", true);
-            yield return Timer(duration);
-            animator.SetBool("isRight", false);
-            // walk right
-            //Transform.rotation = Quaternion.Euler(0, 90f, 0);
-            animator.SetBool("isWalking", true);
-            while (elapsed < duration-2)
-            {
-                Transform.position += Transform.forward * speed * Time.deltaTime;
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            animator.SetBool("isWalking", false);
-
-            // turn left
-            animator.SetBool("isLeft", true);
-            yield return Timer(duration-2);
-            animator.SetBool("isLeft", false);
-            Transform.rotation = Quaternion.Euler(0, 0f, 0);
-            // walk left
-            animator.SetBool("isWalking", true);
+            animator.SetBool("isRunning", true);
             while (elapsed < duration)
             {
                 Transform.position += Transform.forward * speed * Time.deltaTime;
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            animator.SetBool("isWalking", false);
-
-            // chill
-            yield return Chill(animator, duration);
-
-        }
-        public static IEnumerator RunAway(Animator animator, Transform Transform, float duration, float speed)
-        {
-            float elapsed = 0f;
-
-
-
-            // start animation
-            animator.SetBool("isWalking", true);
-            while (elapsed < duration)
-            {
-                // slide forward
-                Transform.position += Transform.forward * speed * Time.deltaTime;
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-            // stop walking
-            animator.SetBool("isWalking", false);
+            animator.SetBool("isRunning", false);
         }
     }
 }

@@ -65,7 +65,8 @@ namespace Assets.ViewModels
                 {
                     // movements
                     // mb.StartCoroutine(MovementLibraryElk.Chill(animator, 6f));
-                    mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
+                    //mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
+                    mb.StartCoroutine(MovementLibrary.RunAway(animator, instance.transform, 3f, 2f));
                 }
             }
         }
