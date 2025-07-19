@@ -14,7 +14,7 @@ namespace Assets.ViewModels
         // connection to model (--> services)
         private readonly DiaryService _diaryService;
         // list of all diaries, connections, entries: observable collection can identify changes automatically
-        public ObservableCollection<Diary> Diaries { get; private set; }
+        public ObservableCollection<Diary> Diaries { get; set; }
         public ObservableCollection<DiaryDiaryentry> Connections { get; private set; }
         public ObservableCollection<Diaryentry> Diaryentries { get; private set; }
         // selected diary and entry --> binded to UI
@@ -29,6 +29,7 @@ namespace Assets.ViewModels
         {
             _diaryService = new DiaryService();
             Diaries = new ObservableCollection<Diary>();
+            Connections = new ObservableCollection<DiaryDiaryentry>();
             Diaryentries = new ObservableCollection<Diaryentry>();
             _selectedUser = SessionData.CurrentUser;
         }
@@ -87,7 +88,11 @@ namespace Assets.ViewModels
         // load related animals --> C# async: load but dont block
         public async Task LoadRelatedAnimalsAsync()
         {
-            Debug.Log("Details zu Tieren können derzeit noch nciht angezeigt werden. Wir bitten um Verständnis");
+            Debug.Log("Details zu Tieren können derzeit noch nicht angezeigt werden. Wir bitten um Verständnis");
+            /*
+             * 
+             * 
+             */
         }
     }
 }

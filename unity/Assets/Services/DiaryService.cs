@@ -47,6 +47,7 @@ namespace Assets.Services
                     string wrappedJson = "{\"diaries\":" + json + "}";
                     // into usable objects
                     DiaryListWrapper wrapper = JsonUtility.FromJson<DiaryListWrapper>(wrappedJson);
+                    Debug.Log(wrapper.diaries);
 
                     return wrapper.diaries ;
                 }

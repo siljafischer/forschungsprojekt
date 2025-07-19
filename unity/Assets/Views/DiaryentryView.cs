@@ -52,7 +52,7 @@ public class DiaryentryView : MonoBehaviour
     public void OnBackPressed()
     {
         // back to login
-        SceneManager.LoadScene("DiaryScene");
+        SceneManager.LoadScene("MenuScene");
     }
 
 }

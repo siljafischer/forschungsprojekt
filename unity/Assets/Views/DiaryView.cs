@@ -23,7 +23,7 @@ public class DiaryView : MonoBehaviour
 
         // get current user from SessionData
         var CurrentUser = SessionData.CurrentUser;
-        Debug.Log("Hi " + CurrentUser.Name + ", öffne doch mal dein Tagebuch und schaue, welchen Tieren du begegnest");
+        Debug.Log("Hi " + CurrentUser.Name + ", hier solltest du dein Tagebuch finden");
 
         // load animals async (Coroutine ~ async/await: wait but dont block game)
         StartCoroutine(LoadAndDisplayDiary());
