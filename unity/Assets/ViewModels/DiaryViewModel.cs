@@ -6,6 +6,9 @@ using Assets.Services;
 using UnityEngine;
 using Assets.Library;
 using UnityEditor.Profiling.Memory.Experimental;
+using System;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Assets.ViewModels
 {
@@ -14,13 +17,13 @@ namespace Assets.ViewModels
         // connection to model (--> services)
         private readonly DiaryService _diaryService;
         // list of all diaries, connections, entries: observable collection can identify changes automatically
-        public ObservableCollection<Diary> Diaries { get; set; }
+        public ObservableCollection<Diary> Diaries { get; private set; }
         public ObservableCollection<DiaryDiaryentry> Connections { get; private set; }
         public ObservableCollection<Diaryentry> Diaryentries { get; private set; }
         // selected diary and entry --> binded to UI
-        public Diary SelectedDiary { get; private set; }
-        public DiaryDiaryentry SelectedConnection { get; private set; }
-        public Diaryentry SelectedDiaryentry { get; private set; }
+        [SerializeField] public Diary SelectedDiary { get; private set; }
+        [SerializeField] public DiaryDiaryentry SelectedConnection { get; private set; }
+        [SerializeField] public Diaryentry SelectedDiaryentry { get; private set; }
         // selected user --> binded to UI
         [SerializeField] public User _selectedUser { get; private set; }
 
@@ -58,6 +61,7 @@ namespace Assets.ViewModels
             var diaries = await _diaryService.GetByUser(_selectedUser.Id);
             foreach (var diary in diaries)
             {
+                UnityEngine.Debug.Log(diary);
                 Diaries.Add(diary);
             }
             if (Diaries.Count > 0)
@@ -67,7 +71,7 @@ namespace Assets.ViewModels
 
             // get connections
             Connections.Clear();
-            var connections = await _diaryService.GetById(SelectedDiary.id);
+            var connections = await _diaryService.GetById(SelectedDiary.id); // SD.id STIMMT, ABER SERVICE WIRD NICHT AUFGERUFEN
             foreach (var connection in connections)
             {
                 Connections.Add(connection);
@@ -88,7 +92,7 @@ namespace Assets.ViewModels
         // load related animals --> C# async: load but dont block
         public async Task LoadRelatedAnimalsAsync()
         {
-            Debug.Log("Details zu Tieren können derzeit noch nicht angezeigt werden. Wir bitten um Verständnis");
+            UnityEngine.Debug.Log("Details zu Tieren können derzeit noch nicht angezeigt werden. Wir bitten um Verständnis");
             /*
              * 
              * 

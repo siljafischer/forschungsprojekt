@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Assets.Models;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace Assets.Services
 {
@@ -14,10 +15,11 @@ namespace Assets.Services
     {
 
         // wrapper class --> json to usable objects
-        [Serializable]
+        [System.Serializable]
         public class DiaryListWrapper
         {
-            public List<Diary> diaries;
+            public string id;
+            public string user;
         };
 
         [Serializable]
@@ -44,12 +46,12 @@ namespace Assets.Services
                 {
                     // json-answer
                     var json = await response.Content.ReadAsStringAsync();
-                    string wrappedJson = "{\"diaries\":" + json + "}";
                     // into usable objects
-                    DiaryListWrapper wrapper = JsonUtility.FromJson<DiaryListWrapper>(wrappedJson);
-                    Debug.Log(wrapper.diaries);
-
-                    return wrapper.diaries ;
+                    DiaryListWrapper wrapper = JsonUtility.FromJson<DiaryListWrapper>(json);
+                    var diary = new Diary();
+                    diary.id = wrapper.id;
+                    diary.user = wrapper.user;
+                    return new List<Diary> { diary };
                 }
                 else
                 {
