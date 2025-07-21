@@ -86,14 +86,37 @@ namespace Assets.Library
             yield return Timer(duration - 1);
             animator.SetBool("isEating", false);
 
+            // run forward
             animator.SetBool("isRunning", true);
-            while (elapsed < duration)
+            while (elapsed < duration-2)
             {
                 Transform.position += Transform.forward * speed * Time.deltaTime;
                 elapsed += Time.deltaTime;
                 yield return null;
             }
             animator.SetBool("isRunning", false);
+
+            // run right
+            animator.SetBool("isRunningRight", true);
+            yield return Timer(0.3f);
+            Transform.rotation = Quaternion.Euler(0, 90f, 0);
+            animator.SetBool("isRunningRight", false);
+
+            elapsed = 0f;
+            animator.SetBool("isRunning", true);
+            while (elapsed < duration - 2)
+            {
+                Transform.position += Transform.forward * speed * Time.deltaTime;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            animator.SetBool("isRunning", false);
+
+            // run left and mysteriously disappear
+            animator.SetBool("isRunningLeft", true);
+            yield return Timer(0.3f);
+            Transform.rotation = Quaternion.Euler(0, 180f, 0);
+            animator.SetBool("isRunningLeft", false);
         }
     }
 }
