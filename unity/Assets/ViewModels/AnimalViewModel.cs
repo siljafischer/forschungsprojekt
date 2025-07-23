@@ -5,6 +5,7 @@ using Assets.Models;
 using Assets.Services;
 using UnityEngine;
 using Assets.Library;
+using System.Linq;
 
 namespace Assets.ViewModels
 {
@@ -39,6 +40,15 @@ namespace Assets.ViewModels
             {
                 SelectedAnimal = Animals[6];
             }
+        }
+
+        // load all animals --> C# async: load but dont block
+        public async Task<Animal> LoadAnimalByIdAsync(string id)
+        {
+            // call service (service calls api)
+            var animals = await _animalService.GetAnimalById(id);
+            // return animal
+            return animals.FirstOrDefault();
         }
 
         // Move --> call to library (helpers). Library holds implementation of algorithms, etc.

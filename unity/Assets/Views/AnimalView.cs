@@ -91,4 +91,10 @@ public class AnimalView : MonoBehaviour
         // back to login
         SceneManager.LoadScene("MenuScene");
     }
+
+    // to diary
+    public void OnDiaryPressed()
+    {
+        SceneManager.LoadScene("DiaryScene");
+    }
 }

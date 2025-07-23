@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Assets.Models;
 using UnityEngine;
+using static Assets.Services.DiaryService;
 
 namespace Assets.Services
 {
@@ -14,12 +15,20 @@ namespace Assets.Services
     {
 
         // wrapper class --> json to usable objects
-        [Serializable]
+        [System.Serializable]
         public class AnimalListWrapper
         {
             public List<Animal> animals;
         }
 
+        [System.Serializable]
+        public class AnimalObjectWrapper
+        {
+            public string id;
+            public string name;
+            public string animationlink;
+            public string habitat;
+        };
 
         // get all Animals
         public async Task<List<Animal>> GetAnimalsAsync()
@@ -54,7 +63,7 @@ namespace Assets.Services
 
 
         // get Animal by Id
-        public async Task<List<Animal>> GetAnimalById(int id)
+        public async Task<List<Animal>> GetAnimalById(string id)
         {
             try
             {
@@ -65,15 +74,18 @@ namespace Assets.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    // work-around: only one item in list
-                    var Animal = JsonUtility.FromJson<Animal>(json);
-                    var z = new List<Animal> { Animal };
-                    return z;
+                    AnimalObjectWrapper wrapper = JsonUtility.FromJson<AnimalObjectWrapper>(json);
+                    var animal = new Animal();
+                    animal.id = wrapper.id;
+                    animal.name = wrapper.name;
+                    animal.animationlink = wrapper.animationlink;
+                    animal.habitat = wrapper.habitat;
+                    return new List<Animal> { animal };
                 }
                 else
                 {
                     // error: empty list
-                    System.Diagnostics.Debug.WriteLine("Keine Kalender gefunden");
+                    System.Diagnostics.Debug.WriteLine("Kein Tier gefunden");
                     return new List<Animal>();
                 }
             }

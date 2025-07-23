@@ -28,10 +28,11 @@ namespace Assets.Services
             public List<DiaryDiaryentry> connections;
         };
 
-        [Serializable]
+        [System.Serializable]
         public class EntryListWrapper
         {
-            public List<Diaryentry> entries;
+            public string id;
+            public string id_animal;
         };
 
         // get diary by current User
@@ -73,7 +74,7 @@ namespace Assets.Services
             try
             {
                 // GET request an die API
-                var response = await _httpClient.GetAsync($"Diaryentry/allById/{id}");
+                var response = await _httpClient.GetAsync($"Diary/allRelatedEntries/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -81,9 +82,8 @@ namespace Assets.Services
                     var json = await response.Content.ReadAsStringAsync();
                     string wrappedJson = "{\"entries\":" + json + "}";
                     // into usable objects
-                    ConnectionListWrapper wrapper = JsonUtility.FromJson<ConnectionListWrapper>(wrappedJson);
-
-                    return wrapper.connections;
+                    var connections = JsonConvert.DeserializeObject<List<DiaryDiaryentry>>(json);
+                    return connections ?? new List<DiaryDiaryentry>();
                 }
                 else
                 {
@@ -104,17 +104,19 @@ namespace Assets.Services
             try
             {
                 // GET request an die API
-                var response = await _httpClient.GetAsync($"Diary/allRelatedEntries/{id}");
+                var response = await _httpClient.GetAsync($"Diaryentry/allById/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     // json-answer
                     var json = await response.Content.ReadAsStringAsync();
-                    string wrappedJson = "{\"entries\":" + json + "}";
+                    //string wrappedJson = "{\"entries\":" + json + "}";
                     // into usable objects
-                    EntryListWrapper wrapper = JsonUtility.FromJson<EntryListWrapper>(wrappedJson);
-
-                    return wrapper.entries;
+                    EntryListWrapper wrapper = JsonUtility.FromJson<EntryListWrapper>(json);
+                    var entry = new Diaryentry();
+                    entry.id = wrapper.id;
+                    entry.id_animal = wrapper.id_animal;
+                    return new List<Diaryentry> { entry };
                 }
                 else
                 {
