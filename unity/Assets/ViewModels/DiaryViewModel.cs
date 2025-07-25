@@ -92,7 +92,7 @@ namespace Assets.ViewModels
             Diaryentries.Clear();
             foreach (var connection in Connections)
             {
-                var entries = await _diaryService.GetDiaryEntries(connection.id_diary);
+                var entries = await _diaryService.GetDiaryEntries(connection.id_diaryentry);
                 foreach (var entry in entries)
                 {
                     Diaryentries.Add(entry);
@@ -107,14 +107,13 @@ namespace Assets.ViewModels
         // load related animals --> C# async: load but dont block
         public async Task LoadRelatedAnimalsAsync()
         {
-            UnityEngine.Debug.Log("Details zu Tieren können derzeit noch nicht angezeigt werden. Wir bitten um Verständnis");
             // get animals by AnimalViewModel
              var animalViewModel = new AnimalViewModel();
              
              // get every Animal and store in list
              foreach (var entry in Diaryentries) {
                 var anim = await animalViewModel.LoadAnimalByIdAsync(entry.id_animal);
-                UnityEngine.Debug.Log(anim);
+                UnityEngine.Debug.Log(anim.name);
                 Animals.Add(anim);
              }
              
@@ -125,7 +124,7 @@ namespace Assets.ViewModels
             }
         }
 
-        public async Task Scroll(int counter)
+        public async Task ScrollForward(int counter)
         {
             // change with scroll --> 
             if (counter <= Animals.Count)
@@ -133,6 +132,19 @@ namespace Assets.ViewModels
                 SelectedConnection = Connections[counter];
                 SelectedDiaryentry = Diaryentries[counter];
                 SelectedAnimal = Animals[counter];
+                UnityEngine.Debug.Log(SelectedAnimal.Name);
+            }
+        }
+
+        public async Task ScrollBackward(int counter)
+        {
+            // change with scroll --> 
+            if (counter <= Animals.Count)
+            {
+                SelectedConnection = Connections[counter];
+                SelectedDiaryentry = Diaryentries[counter];
+                SelectedAnimal = Animals[counter];
+                UnityEngine.Debug.Log(SelectedAnimal.Name);
             }
         }
     }

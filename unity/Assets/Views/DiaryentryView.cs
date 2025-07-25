@@ -50,8 +50,6 @@ public class DiaryentryView : MonoBehaviour
 
         // load animals async (Coroutine ~ async/await: wait but dont block game)
         StartCoroutine(LoadAndDisplayEntries());
-        StartCoroutine(FillInputFields());
-
     }
 
     private IEnumerator LoadAndDisplayEntries()
@@ -71,6 +69,9 @@ public class DiaryentryView : MonoBehaviour
         Task loadTaskAnimals = _viewModel.LoadRelatedAnimalsAsync();
         // called by Coroutine --> WaitUntil ~ async/await: wait until task ist completed)
         yield return new WaitUntil(() => loadTaskAnimals.IsCompleted);
+
+        // show animals
+        StartCoroutine(FillInputFields());
     }
 
     private IEnumerator FillInputFields()
@@ -81,29 +82,38 @@ public class DiaryentryView : MonoBehaviour
 
         if (currentAnimal != null)
         {
-            ((TextMeshProUGUI)AnimalNameInput.placeholder).text = currentAnimal.Name;
-            ((TextMeshProUGUI)HabitatInput.placeholder).text = currentAnimal.Habitat;
+            ((TextMeshProUGUI)AnimalNameInput.placeholder).text = "Du hast dieses Tier fotografiert: " + currentAnimal.Name;
+            ((TextMeshProUGUI)HabitatInput.placeholder).text = "Hier lebt es: " + currentAnimal.Habitat;
         }
 
         if (currentConnection != null)
         {
             ((TextMeshProUGUI)PictureInput.placeholder).text = currentConnection.TakenPicture;
-            ((TextMeshProUGUI)DateInput.placeholder).text = currentConnection.Date;
+            ((TextMeshProUGUI)DateInput.placeholder).text = "Fotografiert am: " + currentConnection.Date;
         }
 
         yield return "success";
     }
 
 
-    // back button
-    public void OnScrollPressed()
+    // scroll button forward
+    public void OnScrollForwardPressed()
     {
-        // back to login
-        _viewModel.Scroll(counter);
+        _viewModel.ScrollForward(counter);
         counter = counter + 1;
 
         // update values
-        FillInputFields();
+        StartCoroutine(FillInputFields());
+    }
+
+    // scroll button backward
+    public void OnScrollBackwardPressed()
+    {
+        counter = counter - 1;
+        _viewModel.ScrollBackward(counter);
+
+        // update values
+        StartCoroutine(FillInputFields());
     }
 
     // back button
