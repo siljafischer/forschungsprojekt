@@ -28,6 +28,7 @@ namespace Assets.Services
             public string name;
             public string animationlink;
             public string habitat;
+            public string picture;
         };
 
         // get all Animals
@@ -80,6 +81,7 @@ namespace Assets.Services
                     animal.name = wrapper.name;
                     animal.animationlink = wrapper.animationlink;
                     animal.habitat = wrapper.habitat;
+                    animal.picture = wrapper.picture;
                     return new List<Animal> { animal };
                 }
                 else

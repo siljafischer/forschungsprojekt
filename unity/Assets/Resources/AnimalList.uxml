@@ -6,5 +6,6 @@
         <ui:TextField label="Name" binding-path="name" />
         <ui:TextField label="Animationlink" binding-path="animationlink" />
         <ui:TextField label="Habitat" binding-path="habitat" />
+        <ui:TextField label="Picture" binding-path="picture" />
     </ui:VisualElement>
 </engine:UIDocument>

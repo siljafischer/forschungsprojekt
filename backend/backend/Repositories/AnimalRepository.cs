@@ -42,7 +42,8 @@ namespace backend.Repositories
                         id = values[0],
                         name = values[1],
                         animationlink = values[2],
-                        habitat = values[3]
+                        habitat = values[3],
+                        picture = values[4]
                     });
 
                 }
@@ -56,9 +57,9 @@ namespace backend.Repositories
         private void SaveDataToCsv()
         {
             // header
-            var lines = new List<string> { "id;name;animationlink;habitat" };
+            var lines = new List<string> { "id;name;animationlink;habitat;picture " };
             // values
-            lines.AddRange(_items.Select(item => $"{item.id};{item.name};{item.animationlink};{item.habitat}"));
+            lines.AddRange(_items.Select(item => $"{item.id};{item.name};{item.animationlink};{item.habitat};{item.picture}"));
             // save
             File.WriteAllLines(_csvFilePath, lines);
         }
@@ -91,6 +92,7 @@ namespace backend.Repositories
                 existingItem.name = item.name;
                 existingItem.animationlink = item.animationlink;
                 existingItem.habitat = item.habitat;
+                existingItem.picture = item.picture;
                 // save current status
                 SaveDataToCsv();
             }

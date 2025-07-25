@@ -8,6 +8,7 @@ using Assets.Models;
 using UnityEngine.SceneManagement;
 using System;
 using TMPro;
+using UnityEngine.UI;
 
 // gets UIDocument-Component 
 [RequireComponent(typeof(UIDocument))]
@@ -24,13 +25,16 @@ public class DiaryentryView : MonoBehaviour
     private VisualElement _root;
 
     // counter for scrolling
-    int counter = 1;
+    int counter = 0;
     // TextInputs
     [Header("UI Input Fields")]
     public TMP_InputField AnimalNameInput;
     public TMP_InputField DateInput;
     public TMP_InputField HabitatInput;
-    public TMP_InputField PictureInput;
+
+    // Pictures
+    public UnityEngine.UI.Image RealisticPicture;
+    public UnityEngine.UI.Image TakenPicture;
 
     // automatic call: activate object
     private void Awake()
@@ -82,14 +86,29 @@ public class DiaryentryView : MonoBehaviour
 
         if (currentAnimal != null)
         {
-            ((TextMeshProUGUI)AnimalNameInput.placeholder).text = "Du hast dieses Tier fotografiert: " + currentAnimal.Name;
-            ((TextMeshProUGUI)HabitatInput.placeholder).text = "Hier lebt es: " + currentAnimal.Habitat;
+            AnimalNameInput.text = "Du hast dieses Tier fotografiert: " + currentAnimal.Name;
+            HabitatInput.text = "Hier lebt es: " + currentAnimal.Habitat;
+            Texture2D photoTexture = Resources.Load<Texture2D>(currentAnimal.Picture);
+            if (photoTexture != null)
+            {
+                Sprite photoSprite = Sprite.Create(photoTexture,
+                    new Rect(0, 0, photoTexture.width, photoTexture.height),
+                    Vector2.zero);
+                RealisticPicture.sprite = photoSprite;
+            }
         }
 
         if (currentConnection != null)
         {
-            ((TextMeshProUGUI)PictureInput.placeholder).text = currentConnection.TakenPicture;
-            ((TextMeshProUGUI)DateInput.placeholder).text = "Fotografiert am: " + currentConnection.Date;
+            Texture2D photoTexture = Resources.Load<Texture2D>(currentConnection.TakenPicture);
+            if (photoTexture != null)
+            {
+                Sprite photoSprite = Sprite.Create(photoTexture,
+                    new Rect(0, 0, photoTexture.width, photoTexture.height),
+                    Vector2.zero);
+                TakenPicture.sprite = photoSprite;
+            }
+            DateInput.text = "Fotografiert am: " + currentConnection.Date;
         }
 
         yield return "success";
@@ -99,8 +118,8 @@ public class DiaryentryView : MonoBehaviour
     // scroll button forward
     public void OnScrollForwardPressed()
     {
-        _viewModel.ScrollForward(counter);
         counter = counter + 1;
+        _viewModel.ScrollForward(counter);
 
         // update values
         StartCoroutine(FillInputFields());

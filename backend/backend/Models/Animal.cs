@@ -9,5 +9,6 @@ namespace backend.Models
         public string name { get; set; }
         public string animationlink { get; set; }
         public string habitat { get; set; }
+        public string picture { get; set; }
     }
 }
