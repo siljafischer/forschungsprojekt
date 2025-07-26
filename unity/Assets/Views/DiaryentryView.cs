@@ -35,6 +35,8 @@ public class DiaryentryView : MonoBehaviour
     // Pictures
     public UnityEngine.UI.Image RealisticPicture;
     public UnityEngine.UI.Image TakenPicture;
+    public UnityEngine.UI.Image leftSide;
+    public UnityEngine.UI.Image rightSide;
 
     // automatic call: activate object
     private void Awake()
@@ -51,6 +53,16 @@ public class DiaryentryView : MonoBehaviour
         // get current user from SessionData
         var CurrentUser = SessionData.CurrentUser;
         Debug.Log(CurrentUser.Name + ", schau dir an, welche Tiere du schon fotografiert hast!");
+
+        Texture2D photoTexture = Resources.Load<Texture2D>("Photo/pergament");
+        if (photoTexture != null)
+        {
+            Sprite photoSprite = Sprite.Create(photoTexture,
+                new Rect(0, 0, photoTexture.width, photoTexture.height),
+                Vector2.zero);
+            leftSide.sprite = photoSprite;
+            rightSide.sprite = photoSprite;
+        }
 
         // load animals async (Coroutine ~ async/await: wait but dont block game)
         StartCoroutine(LoadAndDisplayEntries());
@@ -118,21 +130,27 @@ public class DiaryentryView : MonoBehaviour
     // scroll button forward
     public void OnScrollForwardPressed()
     {
-        counter = counter + 1;
-        _viewModel.ScrollForward(counter);
+        if (counter+1 < _viewModel.Animals.Count)
+        {
+            counter = counter + 1;
+            _viewModel.ScrollForward(counter);
 
-        // update values
-        StartCoroutine(FillInputFields());
+            // update values
+            StartCoroutine(FillInputFields());
+        }
     }
 
     // scroll button backward
     public void OnScrollBackwardPressed()
     {
-        counter = counter - 1;
-        _viewModel.ScrollBackward(counter);
+        if (counter-1 >= 0)
+        {
+            counter = counter - 1;
+            _viewModel.ScrollBackward(counter);
 
-        // update values
-        StartCoroutine(FillInputFields());
+            // update values
+            StartCoroutine(FillInputFields());
+        }
     }
 
     // back button
