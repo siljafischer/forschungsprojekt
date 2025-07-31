@@ -31,9 +31,11 @@ namespace Assets.Library
         }
         public static IEnumerator MoveUnseen(Animator animator, Transform Transform, float duration, float speed)
         {
+            float elapsed = 0f;
+
             for (int i = 0; i <= 2; i++)
             {
-                float elapsed = 0f;
+                elapsed = 0f;
 
                 animator.applyRootMotion = false;
                 // eating
@@ -72,7 +74,43 @@ namespace Assets.Library
 
                 // chill
                 yield return Chill(animator, duration);
+                yield return Timer(duration);
             }
+
+            // eating
+            animator.SetBool("isEating", true);
+            yield return Timer(duration - 1);
+            animator.SetBool("isEating", false);
+
+            // turn and walk forward
+            elapsed = 0f;
+            animator.SetBool("isRight", true);
+            yield return Timer(duration);
+            animator.SetBool("isRight", false);
+            Transform.rotation = Quaternion.Euler(0, 180f, 0);
+            animator.SetBool("isWalking", true);
+            while (elapsed < duration)
+            {
+                Transform.position += Transform.forward * speed * Time.deltaTime;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            animator.SetBool("isWalking", false);
+            
+            // turn and walk right
+            elapsed = 0f;
+            animator.SetBool("isRight", true);
+            yield return Timer(duration);
+            animator.SetBool("isRight", false);
+            Transform.rotation = Quaternion.Euler(0, 90f, 0);
+            animator.SetBool("isWalking", true);
+            while (elapsed < duration - 2)
+            {
+                Transform.position += Transform.forward * speed * Time.deltaTime;
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            animator.SetBool("isWalking", false);
 
         }
 

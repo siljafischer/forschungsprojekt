@@ -75,9 +75,9 @@ namespace Assets.ViewModels
                 {
                     // movements
                     // movement unseen
-                    // mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
+                    mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
                     // flee if person gets too close
-                    mb.StartCoroutine(MovementLibrary.RunAway(animator, instance.transform, 3f, 25f));
+                    // mb.StartCoroutine(MovementLibrary.RunAway(animator, instance.transform, 3f, 25f));
                 }
             }
         }
