@@ -7,19 +7,20 @@ namespace Assets.Models
 {
     // user class, serializable for databinding
     [Serializable]
-    public class Animal
+    public class Animal : BusinessObject
     {
         // attributes
-        [SerializeField] public string id;
         [SerializeField] public string name;
         [SerializeField] public string animationlink;
         [SerializeField] public string habitat;
+        [SerializeField] public string picture;
 
         // events for databinding
         public event Action<string> OnIdChanged;
         public event Action<string> OnNameChanged;
         public event Action<string> OnAnimationlinkChanged;
         public event Action<string> OnHabitatChanged;
+        public event Action<string> OnPictureChanged;
 
         // getter, setter
         public string Id
@@ -67,6 +68,19 @@ namespace Assets.Models
                 {
                     habitat = value;
                     OnHabitatChanged?.Invoke(habitat);
+                }
+            }
+        }
+
+        public string Picture
+        {
+            get => picture;
+            set
+            {
+                if (picture != value)
+                {
+                    picture = value;
+                    OnPictureChanged?.Invoke(picture);
                 }
             }
         }

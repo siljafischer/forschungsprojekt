@@ -18,8 +18,8 @@ public class MenuView : MonoBehaviour
 
     public void OnRoadPressed()
     {
-        Debug.Log("Aktuell steht nur unsere Bauernhofstrecke zur Verfügung");
-        SceneManager.LoadScene("BauernhofScene");
+        Debug.Log("Aktuell steht nur unsere Waldstrecke zur Verfügung");
+        SceneManager.LoadScene("ForrestScene");
     }
     public void OnAccountPressed()
     {

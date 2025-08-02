@@ -7,10 +7,9 @@ namespace Assets.Models
 {
     // user class
     [Serializable]
-    public class Diary
+    public class Diary : BusinessObject
     {
         // attributes
-        public string id { get; set; }
         public string user { get; set; }
     }
 }

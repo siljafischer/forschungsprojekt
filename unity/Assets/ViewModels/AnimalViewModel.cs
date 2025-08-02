@@ -5,6 +5,7 @@ using Assets.Models;
 using Assets.Services;
 using UnityEngine;
 using Assets.Library;
+using System.Linq;
 
 namespace Assets.ViewModels
 {
@@ -41,6 +42,15 @@ namespace Assets.ViewModels
             }
         }
 
+        // load all animals --> C# async: load but dont block
+        public async Task<Animal> LoadAnimalByIdAsync(string id)
+        {
+            // call service (service calls api)
+            var animals = await _animalService.GetAnimalByIdAsync(id);
+            // return animal
+            return animals.FirstOrDefault();
+        }
+
         // Move --> call to library (helpers). Library holds implementation of algorithms, etc.
         public void AnimalWalks(GameObject instance)
         {
@@ -65,9 +75,9 @@ namespace Assets.ViewModels
                 {
                     // movements
                     // movement unseen
-                    // mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
+                    mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
                     // flee if person gets too close
-                    mb.StartCoroutine(MovementLibrary.RunAway(animator, instance.transform, 3f, 25f));
+                    // mb.StartCoroutine(MovementLibrary.RunAway(animator, instance.transform, 3f, 25f));
                 }
             }
         }

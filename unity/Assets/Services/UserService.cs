@@ -53,7 +53,7 @@ namespace Assets.Services
 
 
         // get User by Id
-        public async Task<List<User>> GetUserById(int id)
+        public async Task<List<User>> GetUserByIdAsync(int id)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Assets.Services
         }
 
         // get User by username
-        public async Task<List<User>> GetUserByUsername(string username)
+        public async Task<List<User>> GetUserByUsernameAsync(string username)
         {
             try
             {

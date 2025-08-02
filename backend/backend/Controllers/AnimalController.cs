@@ -95,6 +95,7 @@ namespace backend.Controllers
             updatedItem.name = updatedItem.name;
             updatedItem.animationlink = updatedItem.animationlink;
             updatedItem.habitat = updatedItem.habitat;
+            updatedItem.picture = updatedItem.picture;
             _repository.Update(updatedItem);
             return NoContent();
         }

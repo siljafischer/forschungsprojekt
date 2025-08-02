@@ -30,7 +30,6 @@ public class AccountView : MonoBehaviour
     public TMP_InputField MailInput;
     public TMP_InputField PasswordOld;
     public TMP_InputField PasswordNewInput;
-    public TMP_InputField TakenPictures;
 
     // automatic call: activate object
     private void Awake()
