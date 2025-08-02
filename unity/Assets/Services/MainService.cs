@@ -20,10 +20,12 @@ namespace Assets.Services
             _httpClient = new HttpClient
             {
                 // Julia
-                // BaseAddress = new Uri("https://localhost:7167")
+                //BaseAddress = new Uri("https://localhost:7167")
 
                 // Silja
-                BaseAddress = new Uri("http://localhost:5010")
+                //BaseAddress = new Uri("http://localhost:5010")
+
+				BaseAddress = new Uri("http://192.168.178.127:5010")
             };
         }
     }
