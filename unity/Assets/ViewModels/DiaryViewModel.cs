@@ -50,7 +50,7 @@ namespace Assets.ViewModels
         {
             // load diary
             Diaries.Clear();
-            var diaries = await _diaryService.GetByUser(_selectedUser.Id);
+            var diaries = await _diaryService.GetByUserAsync(_selectedUser.Id);
             foreach (var diary in diaries)
             {
                 Diaries.Add(diary);
@@ -66,7 +66,7 @@ namespace Assets.ViewModels
         {
             // load diary
             Diaries.Clear();
-            var diaries = await _diaryService.GetByUser(_selectedUser.Id);
+            var diaries = await _diaryService.GetByUserAsync(_selectedUser.Id);
             foreach (var diary in diaries)
             {
                 Diaries.Add(diary);
@@ -78,7 +78,7 @@ namespace Assets.ViewModels
 
             // get connections
             Connections.Clear();
-            var connections = await _diaryService.GetById(SelectedDiary.id); // SD.id STIMMT, ABER SERVICE WIRD NICHT AUFGERUFEN
+            var connections = await _diaryService.GetByIdAsync(SelectedDiary.id);
             foreach (var connection in connections)
             {
                 Connections.Add(connection);
@@ -92,7 +92,7 @@ namespace Assets.ViewModels
             Diaryentries.Clear();
             foreach (var connection in Connections)
             {
-                var entries = await _diaryService.GetDiaryEntries(connection.id_diaryentry);
+                var entries = await _diaryService.GetDiaryEntriesAsync(connection.id_diaryentry);
                 foreach (var entry in entries)
                 {
                     Diaryentries.Add(entry);

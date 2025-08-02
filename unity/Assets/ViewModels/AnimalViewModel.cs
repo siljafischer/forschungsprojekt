@@ -46,7 +46,7 @@ namespace Assets.ViewModels
         public async Task<Animal> LoadAnimalByIdAsync(string id)
         {
             // call service (service calls api)
-            var animals = await _animalService.GetAnimalById(id);
+            var animals = await _animalService.GetAnimalByIdAsync(id);
             // return animal
             return animals.FirstOrDefault();
         }

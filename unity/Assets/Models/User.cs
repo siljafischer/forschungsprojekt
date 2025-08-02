@@ -7,10 +7,9 @@ namespace Assets.Models
 {
     // user class, serializable for databinding
     [Serializable]
-    public class User
+    public class User : BusinessObject
     {
         // attributes
-        [SerializeField] public string id;
         [SerializeField] public string name;
         [SerializeField] public string username;
         [SerializeField] public string mail;

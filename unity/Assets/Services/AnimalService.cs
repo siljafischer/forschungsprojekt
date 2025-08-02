@@ -64,7 +64,7 @@ namespace Assets.Services
 
 
         // get Animal by Id
-        public async Task<List<Animal>> GetAnimalById(string id)
+        public async Task<List<Animal>> GetAnimalByIdAsync(string id)
         {
             try
             {

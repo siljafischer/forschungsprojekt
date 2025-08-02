@@ -155,7 +155,7 @@ namespace Assets.ViewModels
                 ? SessionData.CurrentUser?.Username
                 : Username;
 
-            var users = await _userService.GetUserByUsername(uname);
+            var users = await _userService.GetUserByUsernameAsync(uname);
             foreach (var user in users)
             {
                 Users.Add(user);

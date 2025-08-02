@@ -36,7 +36,7 @@ namespace Assets.Services
         };
 
         // get diary by current User
-        public async Task<List<Diary>> GetByUser(string user)
+        public async Task<List<Diary>> GetByUserAsync(string user)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace Assets.Services
 
 
         // get connections by current Diay
-        public async Task<List<DiaryDiaryentry>> GetById(string id)
+        public async Task<List<DiaryDiaryentry>> GetByIdAsync(string id)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace Assets.Services
         }
 
         // get entries by current connections
-        public async Task<List<Diaryentry>> GetDiaryEntries(string id)
+        public async Task<List<Diaryentry>> GetDiaryEntriesAsync(string id)
         {
             try
             {
