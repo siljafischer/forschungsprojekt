@@ -160,7 +160,7 @@ namespace Assets.ViewModels
             {
                 Users.Add(user);
             }
-            // Authenticate
+            // Authenticate --> Backend!!!
             if (Users[0].password == Password)
             {
                 // set selectedUser

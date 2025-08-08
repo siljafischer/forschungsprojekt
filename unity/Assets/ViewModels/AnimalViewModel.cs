@@ -35,7 +35,7 @@ namespace Assets.ViewModels
                 Animals.Add(animal);
             }
 
-            // select animal --> MANUALLY --> CHANGE LATER!!!
+            // select animal --> MANUALLY --> CHANGE LATER INTO RANDOM!!!
             if (Animals.Count > 0)
             {
                 SelectedAnimal = Animals[6];
