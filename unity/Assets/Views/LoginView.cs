@@ -89,5 +89,21 @@ public class LoginView : MonoBehaviour
         // change scene
         SceneManager.LoadScene("MenuScene");
     }
+
+    public void OnRegisterPressed()
+    {
+        // login for user
+        StartCoroutine(Register());
+    }
+    // login for user
+    private IEnumerator Register()
+    {
+        // load user
+        Task loadTask = _viewModel.Register();
+        // WaitUntil ~ async/await: wait until task ist completed)
+        yield return new WaitUntil(() => loadTask.IsCompleted);
+        // change scene
+        SceneManager.LoadScene("AccountScene");
+    }
 }
 

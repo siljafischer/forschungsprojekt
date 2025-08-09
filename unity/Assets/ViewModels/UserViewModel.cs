@@ -143,6 +143,7 @@ namespace Assets.ViewModels
             SelectedUser = SessionData.CurrentUser;
         }
 
+        // login
         // load specific users --> C# async: load but dont block
         public async Task LoadUserByUsernameAsync()
         {
@@ -174,9 +175,31 @@ namespace Assets.ViewModels
             }
         }
 
+        // register
+        public async Task Register()
+        {
+            User newUser = new User();
+            newUser.id = "null";
+            newUser.name = "Namen durch Tippen ändern";
+            newUser.username = "Usernamen durch Tippen ändern";
+            newUser.mail = "Mail durch Tippen ändern";
+            newUser.password = "Setzen";
+            await _userService.CreateUserAsync(newUser);
 
-        // IN DIESER DATEI AUCH MÖGLICHKEIT ZUR REGISTRIERUNG BIETEN
-        // update user
+            // get created user --> last of list
+            var users = await _userService.GetUsersAsync();
+            foreach (var user in users)
+            {
+                Users.Add(user);
+            }
+            int last = Users.Count - 1;
+            // set selectedUser
+            SelectedUser = Users[last];
+            // set logged user as current user for all other scenes
+            SessionData.CurrentUser = SelectedUser;
+        }
+
+        // update
         public async Task UpdateUserAsync()
         {
             // update user
@@ -184,6 +207,15 @@ namespace Assets.ViewModels
             // set updated user as current user for all other scenes
             SyncToSessionUser();
         }
+
+        // delete
+        public async Task DeleteUserAsync()
+        {
+            await _userService.DeleteUserAsync(SelectedUser.id);
+            SessionData.Clear();
+        }
+
+
         private void SyncToSessionUser()
         {
             var target = SessionData.CurrentUser;

@@ -114,11 +114,6 @@ namespace Assets.Services
             }
         }
 
-
-
-
-
-
         // create new user
         public async Task<bool> CreateUserAsync(User user)
         {

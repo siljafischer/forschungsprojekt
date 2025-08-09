@@ -166,9 +166,22 @@ public class AccountView : MonoBehaviour
         BackupOldPassword = _viewModel.UserPassword;
     }
 
+    // functionality of delet user
+    public void OnDeletePressed()
+    {
+        StartCoroutine(DeleteUser());
+        SceneManager.LoadScene("LoginScene");
+    }
+
     private IEnumerator UpdateUser()
     {
         Task loadTask = _viewModel.UpdateUserAsync();
+        yield return new WaitUntil(() => loadTask.IsCompleted);
+    }
+
+    private IEnumerator DeleteUser()
+    {
+        Task loadTask = _viewModel.DeleteUserAsync();
         yield return new WaitUntil(() => loadTask.IsCompleted);
     }
 }
