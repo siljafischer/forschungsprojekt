@@ -37,12 +37,12 @@ namespace Assets.Library
             {
                 elapsed = 0f;
 
-                animator.applyRootMotion = false;
                 // eating
                 animator.SetBool("isEating", true);
                 yield return Timer(duration - 1);
                 animator.SetBool("isEating", false);
 
+                
                 // turn right
                 animator.SetBool("isRight", true);
                 yield return Timer(duration);
