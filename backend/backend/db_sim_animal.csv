@@ -1,4 +1,4 @@
-id;name;animationlink;habitat;picture
+id;name;animationlink;habitat;picture 
 1;Elch;C:\Users\silly\OneDrive\Dokumente\Studium\MIT\2_Semester\Forschungsprojekt\forschungsprojekt\animationen\moose.glb;vorwiegend ausgedehnte Wälder die von Sümpfen Seen oder Flüssen durchzogen sind aber auch Steppen und die Taiga;Photo/x
 2;Luchs;C:\Users\silly\OneDrive\Dokumente\Studium\MIT\2_Semester\Forschungsprojekt\forschungsprojekt\animationen\lynx.glb;vor allem in Europa und Sibirien in Laub- Misch- und Nadelwäldern;Photo/x
 3;Huhn;Chicken_001; häufig in Hühnerställen;Photo/huenchen_realistic
@@ -6,3 +6,4 @@ id;name;animationlink;habitat;picture
 5;Frosch;Waldtiere/Frosch/source/frog;sie leben sowohl im Wasser als auch an Land;Photo/x
 6;Fuchs;Waldtiere/Fuchs/source/Fox_WakingUp;sie leben im Wald;Photo/fuchs_realistic
 7;Wapiti;Waldtiere/Wapiti_oder_Rothirsch/source/Elk Animated;sie leben im Wald;Photo/wapiti_realistic
+8;Schwarzbär;Waldtiere/Schwarzbaer/source/black bear cotw;Nordamerika und von Kanada über die USA bis nach Nordmexiko;Photo/Bear_realistic

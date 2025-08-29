@@ -67,13 +67,12 @@
     <Compile Include="Assets\Models\User.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Views\LoginView.cs" />
-    <Compile Include="Assets\ithappy\Animals_FREE\Scripts\CreatureMovement.cs" />
     <Compile Include="Assets\ViewModels\UserViewModel.cs" />
+    <Compile Include="Assets\Library\ElkMovementLibrary.cs" />
     <Compile Include="Assets\Models\DiaryDiaryentry.cs" />
-    <Compile Include="Assets\ithappy\Animals_FREE\Scripts\ThirdPersonCamera.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Views\AnimalView.cs" />
-    <Compile Include="Assets\ithappy\Animals_FREE\Scripts\MovePlayerInput.cs" />
+    <Compile Include="Assets\Library\BearMovementLibrary.cs" />
     <Compile Include="Assets\Models\Diary.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -92,7 +91,6 @@
     <Compile Include="Assets\ViewModels\SessionData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Services\DiaryService.cs" />
-    <Compile Include="Assets\Library\MovementLibrary.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
@@ -118,8 +116,6 @@
     <Compile Include="Assets\Views\AccountView.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
-    <Compile Include="Assets\ithappy\Animals_FREE\Scripts\PlayerCamera.cs" />
-    <Compile Include="Assets\ithappy\Animals_FREE\Scripts\CreatureMover.cs" />
     <Compile Include="Assets\Models\Animal.cs" />
     <Compile Include="Assets\Views\MenuView.cs" />
     <Compile Include="Assets\Models\BusinessObject.cs" />
@@ -149,7 +145,6 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\ithappy\Animals_FREE\Render_Pipeline_Convert\Documentation.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />

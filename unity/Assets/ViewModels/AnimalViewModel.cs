@@ -35,10 +35,12 @@ namespace Assets.ViewModels
                 Animals.Add(animal);
             }
 
-            // select animal --> MANUALLY --> CHANGE LATER INTO RANDOM!!!
+            // select animal
             if (Animals.Count > 0)
             {
-                SelectedAnimal = Animals[6];
+                // randomly between 6 and 7 (wapiti or bear)
+                int randomIndex = Random.Range(6, 8);
+                SelectedAnimal = Animals[randomIndex];
             }
         }
 
@@ -67,18 +69,38 @@ namespace Assets.ViewModels
                  *  Edit Transition: add is<Movement>
                  *  --> copy everything else from walk
                  */
-                Animator animator = instance.AddComponent<Animator>();
-                animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("AnimalController");
-                animator.applyRootMotion = false;
 
-                if (mb != null)
+                // get animator of current animal --> also 20.000 cases bruachen wir ja eigentlich nicht, hier wäre Potenzial für Optimierungen
+                // Wapiti/Elk
+                if (SelectedAnimal.Id == "7")
                 {
-                    // movements
-                    // movement unseen
-                    mb.StartCoroutine(MovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
-                    // flee if person gets too close
-                    // mb.StartCoroutine(MovementLibrary.RunAway(animator, instance.transform, 3f, 25f));
+                    Animator animator = instance.AddComponent<Animator>();
+                    animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("ElkController");
+                    animator.applyRootMotion = false;
+                    if (mb != null)
+                    {
+                        // movements
+                        // movement unseen
+                        mb.StartCoroutine(ElkMovementLibrary.MoveUnseen(animator, instance.transform, 3f, 2f));
+                        // flee if person gets too close
+                        // mb.StartCoroutine(ElkMovementLibrary.RunAway(animator, instance.transform, 3f, 25f));
+                    }
                 }
+                // Bear
+                if (SelectedAnimal.Id == "8")
+                {
+                    Animator animator = instance.GetComponent<Animator>();
+                    animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>("BearController");
+                    animator.applyRootMotion = false;
+                    if (mb != null)
+                    {
+                        // movements
+                        // movement unseen
+                        mb.StartCoroutine(BearMovementLibrary.MoveUnseen(animator, instance.transform, 3f, 10f));
+                    }
+
+                }
+
             }
         }
     }
