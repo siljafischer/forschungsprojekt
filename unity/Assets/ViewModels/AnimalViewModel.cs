@@ -7,7 +7,7 @@ using UnityEngine;
 using Assets.Library;
 using System.Linq;
 
-namespace Assets.ViewModels
+namespace Assets.Views
 {
     public class AnimalViewModel
     {

@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using UnityEngine.InputSystem.Android;
 
-namespace Assets.ViewModels
+namespace Assets.Views
 {
     public class DiaryViewModel
     {

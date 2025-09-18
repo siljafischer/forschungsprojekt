@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Assets.ViewModels;
+using Assets.Views;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;
@@ -16,6 +16,10 @@ public class AnimalView : MonoBehaviour
     private GameObject _animalInstance;
     // root of UI --> acceess UI (e.g. change text, use buttons)
     private VisualElement _root;
+    // for camera viewfinder UI
+    public GameObject viewfinderUI;
+    private bool viewfinderActive = false;
+
 
 
     // automatic call: activate object (e.g. gamestart)
@@ -97,4 +101,35 @@ public class AnimalView : MonoBehaviour
     {
         SceneManager.LoadScene("DiaryScene");
     }
+
+    public void OnCameraIconPressed()
+    {
+        viewfinderActive = !viewfinderActive;
+
+        if (viewfinderUI != null)
+        {
+            viewfinderUI.SetActive(viewfinderActive);
+        }
+
+        if (viewfinderActive)
+        {
+            Debug.Log("Viewfinder aktiviert. Bereit zum Fotografieren!");
+        }
+        else
+        {
+            Debug.Log("Viewfinder deaktiviert.");
+        }
+    }
+
+    public bool IsViewfinderActive()
+    {
+        return viewfinderActive;
+    }
+
+    public Animal GetSelectedAnimal()
+    {
+        return _viewModel?.SelectedAnimal;
+    }
+
+
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using Assets.ViewModels;
+using Assets.Views;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;

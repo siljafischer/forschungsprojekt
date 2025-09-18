@@ -1,6 +1,6 @@
 ﻿// SEITE MIT BUTTON NÄCHSTE SEITE" --> HOLT EINFACH IMMER NÄCHSTES ELEMENT AUS EINER LISTE :--)
 using UnityEngine;
-using Assets.ViewModels;
+using Assets.Views;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;

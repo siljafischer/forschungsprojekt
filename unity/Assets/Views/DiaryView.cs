@@ -1,6 +1,6 @@
 ﻿// SEITE MIT BUTTON "ÖFFNEN"
 using UnityEngine;
-using Assets.ViewModels;
+using Assets.Views;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;

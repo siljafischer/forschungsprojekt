@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.ViewModels
+namespace Assets.Views
 {
     public static class SessionData
     {

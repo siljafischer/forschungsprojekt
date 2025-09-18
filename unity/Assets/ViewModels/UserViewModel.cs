@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 using System;
 using System.Collections.Generic;
 
-namespace Assets.ViewModels
+namespace Assets.Views
 {
     public class UserViewModel : INotifyBindablePropertyChanged
     {
