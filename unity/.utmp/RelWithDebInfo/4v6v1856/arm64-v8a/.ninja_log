@@ -1,10 +1,19 @@
 # ninja log v5
 59	6287	7751305951758216	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	72d80d4d182121c
 78	6323	7751305951865334	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	76fdb46690fbb819
-1	6443	7751305953384669	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	d508ad06d7edb388
-129	6506	7751305954064891	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	e6b725d1a5a8cecf
-29	6727	7751305956281195	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	a0c94e4148b01f7f
-43	7353	7751305962697426	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	be5c9de8af4cb6fa
 102	7490	7751305964094221	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	377c65af04e9ce56
+1	6443	7751305953384669	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	d508ad06d7edb388
+29	6727	7751305956281195	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	a0c94e4148b01f7f
+129	6506	7751305954064891	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	e6b725d1a5a8cecf
+43	7353	7751305962697426	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	be5c9de8af4cb6fa
 15	7594	7751305965097494	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	85c81b5cb8c6b49b
 7595	7943	7751305968655313	C:/Users/julia/source/repos/forschungsprojekt/unity/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4v6v1856/obj/arm64-v8a/libgame.so	d947f7744cb150ff
+46	5948	7799301371127207	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	76fdb46690fbb819
+118	5959	7799301371204577	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	72d80d4d182121c
+65	6078	7799301372441987	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	d508ad06d7edb388
+87	6084	7799301372502491	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	e6b725d1a5a8cecf
+24	6269	7799301374540996	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	a0c94e4148b01f7f
+145	6672	7799301378562562	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	be5c9de8af4cb6fa
+178	6789	7799301379811119	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	377c65af04e9ce56
+3	6828	7799301380067339	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	85c81b5cb8c6b49b
+6828	7104	7799301382978805	C:/Users/julia/source/repos/forschungsprojekt/unity/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4v6v1856/obj/arm64-v8a/libgame.so	d947f7744cb150ff
